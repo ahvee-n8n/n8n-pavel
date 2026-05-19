@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-14T21:07:33.378Z",
+  "updatedAt": "2026-05-19T17:44:53.145Z",
   "createdAt": "2026-05-14T21:07:33.378Z",
   "id": "lFzbfi7e9lAmkXIm",
   "name": "Gmail files + AI = excel ocr",
@@ -1550,7 +1550,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8912,
+        8880,
         4480
       ],
       "id": "08bd574f-3961-4fcd-9b89-3db94535669e",
@@ -3729,7 +3729,7 @@
       }
     ]
   },
-  "versionId": "28da1ad7-cee8-4453-8f12-8a8682a726cd",
+  "versionId": "2d5fd258-2453-4bb6-979d-d04e29a00553",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
