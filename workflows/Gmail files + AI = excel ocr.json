@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-19T17:44:53.145Z",
+  "updatedAt": "2026-05-22T06:12:24.694Z",
   "createdAt": "2026-05-14T21:07:33.378Z",
   "id": "lFzbfi7e9lAmkXIm",
   "name": "Gmail files + AI = excel ocr",
@@ -637,9 +637,7 @@
         },
         "simple": false,
         "filters": {
-          "labelIds": [
-            "INBOX"
-          ]
+          "labelIds": []
         },
         "options": {
           "dataPropertyAttachmentsPrefixName": "attachment_",
@@ -653,7 +651,13 @@
         4512
       ],
       "id": "7aa724f8-9545-4c2e-9c6c-36271328bb58",
-      "name": "Gmail Trigger"
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "L3vj2hytLoA6A4pY",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1526,7 +1530,13 @@
       ],
       "id": "0295b9b2-cdb2-462b-a936-e2c986e0b3ab",
       "name": "Send a message1",
-      "webhookId": "a70d78f7-8449-49d3-b591-397214a637c0"
+      "webhookId": "a70d78f7-8449-49d3-b591-397214a637c0",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "L3vj2hytLoA6A4pY",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1790,7 +1800,13 @@
       ],
       "id": "c80eb602-187b-4561-a7da-9f2664664f57",
       "name": "Send a message3",
-      "webhookId": "a70d78f7-8449-49d3-b591-397214a637c0"
+      "webhookId": "a70d78f7-8449-49d3-b591-397214a637c0",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "L3vj2hytLoA6A4pY",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
@@ -3729,7 +3745,7 @@
       }
     ]
   },
-  "versionId": "2d5fd258-2453-4bb6-979d-d04e29a00553",
+  "versionId": "67c1ff43-9a6e-4a3a-9b8f-c0dee1ef9bd0",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
