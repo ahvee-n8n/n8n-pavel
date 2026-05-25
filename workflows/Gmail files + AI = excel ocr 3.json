@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-25T05:59:56.414Z",
+  "updatedAt": "2026-05-25T06:55:09.240Z",
   "createdAt": "2026-05-25T05:22:33.044Z",
   "id": "1tp5ERA85rjAAQ18",
   "name": "Gmail files + AI = excel ocr 3",
@@ -68,14 +68,13 @@
     {
       "parameters": {
         "html": "={{ $('Gmail Trigger').item.json.html }}",
-        "destinationKey": "content",
         "options": {}
       },
       "type": "n8n-nodes-base.markdown",
       "typeVersion": 1,
       "position": [
-        4704,
-        4864
+        3376,
+        4752
       ],
       "id": "41bc06c7-3128-4ca5-bb2a-efcd67d76608",
       "name": "Convert text1",
@@ -83,13 +82,13 @@
     },
     {
       "parameters": {
-        "numberInputs": 6
+        "numberInputs": 4
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        5152,
-        4416
+        3920,
+        4288
       ],
       "id": "9df64dff-ea28-4ddc-9c0e-818a0ce062bf",
       "name": "Merge3"
@@ -321,29 +320,6 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "2c90dd63-4d90-4251-96c4-32100dfee3bc",
-              "name": "content",
-              "value": "={{ $json.content }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        4928,
-        4864
-      ],
-      "id": "5d61f2ed-de41-4dad-b6fa-a6106e3cd71c",
-      "name": "Content4"
-    },
-    {
-      "parameters": {
         "jsCode": "return $input.all().map(item => {\n  const url = item.json.url;\n\n  // Спробуємо витягнути ID з двох форматів\n  let match = url.match(/\\/d\\/([a-zA-Z0-9_-]+)/); // формат /d/ID/\n  if (!match) {\n    match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/); // формат ?id=ID\n  }\n\n  if (!match) {\n    throw new Error(\"Не вдалося витягнути ID файлу з URL: \" + url);\n  }\n\n  return {\n    json: {\n      ...item.json, // зберігаємо всі попередні дані\n      fileId: match[1]\n    }\n  };\n});\n"
       },
       "type": "n8n-nodes-base.code",
@@ -363,8 +339,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        4704,
-        4480
+        2752,
+        4320
       ],
       "id": "e56e2298-cebb-41b5-809a-02b4dcb981d9",
       "name": "Extract from File3"
@@ -377,8 +353,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        4704,
-        4672
+        2416,
+        4544
       ],
       "id": "7ffa8d57-8014-4047-ab67-c115de15f84d",
       "name": "Extract from File4",
@@ -399,32 +375,6 @@
     },
     {
       "parameters": {
-        "jsCode": "const inputData = $input.all().map(i => i.json);\n\n// Масив технічних ключів, які треба видалити\nconst technicalKeysPattern = /^__EMPTY/;\n\nconst cleanedData = inputData.map(row => {\n  const newRow = {};\n  for (const key in row) {\n    if (!technicalKeysPattern.test(key)) {\n      // Зберігаємо null для порожніх клітинок\n      newRow[key] = row[key] === undefined ? null : row[key];\n    }\n  }\n  return newRow;\n});\n\n// Перетворюємо в рядок для ChatGPT\nconst outputString = JSON.stringify(cleanedData);\n\nreturn [\n  {\n    json: {\n      content: outputString\n    }\n  }\n];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        4928,
-        4672
-      ],
-      "id": "1a8672c6-c2cc-4a18-9d39-505bcd8da443",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "jsCode": "const inputData = $input.all().map(i => i.json);\n\n// Масив технічних ключів, які треба видалити\nconst technicalKeysPattern = /^__EMPTY/;\n\nconst cleanedData = inputData.map(row => {\n  const newRow = {};\n  for (const key in row) {\n    if (!technicalKeysPattern.test(key)) {\n      // Зберігаємо null для порожніх клітинок\n      newRow[key] = row[key] === undefined ? null : row[key];\n    }\n  }\n  return newRow;\n});\n\n// Перетворюємо в рядок для ChatGPT\nconst outputString = JSON.stringify(cleanedData);\n\nreturn [\n  {\n    json: {\n      content: outputString\n    }\n  }\n];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        4928,
-        4480
-      ],
-      "id": "c88c08d3-fcb1-4a58-b074-8f67dcb036f6",
-      "name": "Code in JavaScript5"
-    },
-    {
-      "parameters": {
         "jsCode": "return $input.all().map(item => {\n  const originalName = item.binary?.data?.fileName;\n\n  return {\n    json: {\n      originalName,\n      contentType: `application/pdf`\n    },\n    binary: item.binary || {}\n  };\n});"
       },
       "type": "n8n-nodes-base.code",
@@ -435,20 +385,6 @@
       ],
       "id": "d8670063-4cf3-4797-8bd4-6decf9e59c8a",
       "name": "Prepare File Names"
-    },
-    {
-      "parameters": {
-        "fileName": "=/files/{{ $json.inputFileName }}",
-        "options": {}
-      },
-      "name": "Write PDF to Shared Folder",
-      "type": "n8n-nodes-base.writeBinaryFile",
-      "typeVersion": 1,
-      "position": [
-        2816,
-        3504
-      ],
-      "id": "833961da-77ce-4a99-a931-7691640f5b65"
     },
     {
       "parameters": {
@@ -485,107 +421,13 @@
     },
     {
       "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        3664,
-        3744
-      ],
-      "id": "beb2cb2a-2e3d-4a59-b2d6-da06e6ab0edb",
-      "name": "Merge2"
-    },
-    {
-      "parameters": {
-        "operation": "Upload File to PDF.co",
-        "binaryData": true,
-        "name": "={{$binary.data.fileName}}"
-      },
-      "type": "n8n-nodes-pdfco.PDFco Api",
-      "typeVersion": 1,
-      "position": [
-        4896,
-        3680
-      ],
-      "id": "abbc9a81-1d9a-4cdc-8d11-8dcbf9825ace",
-      "name": "Upload pdf"
-    },
-    {
-      "parameters": {
-        "operation": "Convert from PDF",
-        "url": "={{ $json.url }}",
-        "advancedOptions": {}
-      },
-      "type": "n8n-nodes-pdfco.PDFco Api",
-      "typeVersion": 1,
-      "position": [
-        5168,
-        3824
-      ],
-      "id": "b058a183-4fa1-4bb6-863a-1e05b85f9a33",
-      "name": "PDFco Api"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "6738b4d9-0d9f-4cc3-a586-cb467032e96e",
-              "name": "content",
-              "value": "={{ $json.data }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        4944,
-        4000
-      ],
-      "id": "286ef103-d03b-4168-8fb3-2160efc8f464",
-      "name": "Content"
-    },
-    {
-      "parameters": {
-        "filePath": "={{ $json.filePath }}"
-      },
-      "name": "Read Processed File1",
-      "type": "n8n-nodes-base.readBinaryFile",
-      "typeVersion": 1,
-      "position": [
-        4592,
-        3728
-      ],
-      "id": "6403e8df-e98f-467b-92f5-1c4361791a76"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Перевірка успішності OCR процесу - беремо імена з Prepare File Names\nconst originalData = $('Prepare File Names').all();\n\nreturn $input.all().map((item, index) => {\n  const originalItem = originalData[index];\n  // const exitCode = item.json.exitCode;\n  // const stderr = item.json.stderr || '';\n  \n  // Якщо OCR не вдалося - кидаємо помилку\n  // if (exitCode !== 0 || stderr.includes('ERROR') || stderr.includes('Error')) {\n  //   throw new Error(`OCR processing failed for ${originalItem.json.inputFileName}. Exit code: ${exitCode}, Error: ${stderr.substring(0, 200)}`);\n  // }\n  \n  return {\n    json: {\n      // exitCode: item.json.exitCode,\n      // stderr: item.json.stderr,\n      // stdout: item.json.stdout,\n      // outputFileName: originalItem.json.inputFileName,\n      // inputFileName: originalItem.json.inputFileName,\n      // filePath: `/files/${originalItem.json.outputFileName}`,\n      // filePath: `/files/unsigned-${originalItem.json.inputFileName}`,\n      filePath: `/files/${originalItem.json.inputFileName}`,\n      // processingType: item.json.processingType,\n      // fileType: item.json.fileType,\n      // originalName: originalItem.json.originalName\n    }\n  };\n});"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        4352,
-        3728
-      ],
-      "id": "5cbdf590-78fe-46be-bb33-33ac928c30ba",
-      "name": "Подготовка без обработки"
-    },
-    {
-      "parameters": {
         "jsCode": "const inputData = $input.first().json.output;\nlet data = inputData;\n\nlet count = 0;\nlet foundItems = [];\n\nfor (let key in data) {\n  const value = data[key];\n  \n  if (Array.isArray(value)) {\n    if (value.length > 0) {\n      count += value.length;\n      foundItems.push({\n        key: key,\n        value: value,\n        type: 'array',\n        itemCount: value.length\n      });\n    }\n  } else if (value !== '' && value !== null && value !== undefined && value !== 0) {\n    count++;\n    foundItems.push({\n      key: key,\n      value: value,\n      type: typeof value\n    });\n  }\n}\n\n// Beautiful HTML table\nlet htmlOutput = `\n<div style=\"font-family: Arial, sans-serif;\">\n  <h3 style=\"color: #2c3e50;\">📊 Finded Fields Report</h3>\n  <p style=\"color: #7f8c8d;\">Total found: <strong style=\"color: #e74c3c;\">${count}</strong>  values</p>\n  <table style=\"width: 100%; border-collapse: collapse; margin-top: 15px;\">\n    <thead>\n      <tr style=\"background-color: #34495e; color: white;\">\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Field</th>\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Value</th>\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Type</th>\n      </tr>\n    </thead>\n    <tbody>\n`;\n\nfoundItems.forEach((item, index) => {\n  let valueDisplay = item.value;\n  let typeDisplay = item.type;\n  let rowColor = index % 2 === 0 ? '#f8f9fa' : '#ffffff';\n  \n  if (item.type === 'array') {\n    valueDisplay = item.value.join(', ');\n    typeDisplay = `<span style=\"color: #e67e22;\">array (${item.itemCount} items)</span>`;\n  } else if (item.type === 'string') {\n    typeDisplay = `<span style=\"color: #27ae60;\">string</span>`;\n  } else if (item.type === 'number') {\n    typeDisplay = `<span style=\"color: #2980b9;\">number</span>`;\n  }\n  \n  htmlOutput += `\n    <tr style=\"background-color: ${rowColor};\">\n      <td style=\"padding: 10px; border: 1px solid #ddd;\"><strong>${item.key}</strong></td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">${valueDisplay}</td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">${typeDisplay}</td>\n    </tr>\n  `;\n});\n\nhtmlOutput += `\n    </tbody>\n  </table>\n  ${JSON.stringify(data, null, 2)}\n</div>\n`;\n\nreturn [{ \n  json: {\n    totalCount: count,\n    foundItems: foundItems,\n    htmlOutput: htmlOutput\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8880,
-        4480
+        7568,
+        4320
       ],
       "id": "5cb28a16-2929-45a1-ac14-1cd8db354847",
       "name": "total"
@@ -594,20 +436,26 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1",
+          "value": "gpt-5.4-nano",
           "mode": "list",
-          "cachedResultName": "gpt-4.1"
+          "cachedResultName": "gpt-5.4-nano"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        6592,
-        4672
+        5280,
+        4512
       ],
       "id": "045b22fd-0af5-48aa-ab97-a406db7bc620",
-      "name": "OpenAI Chat Model4"
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "6WxABrGkJMVqyaUq",
+          "name": "OpenAI account"
+        }
+      }
     },
     {
       "parameters": {
@@ -618,8 +466,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        8112,
-        4560
+        6800,
+        4400
       ],
       "id": "5ab5a65b-298d-40c3-aeee-7b26d20c8ac1",
       "name": "Merge11"
@@ -651,21 +499,21 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        5664,
-        4480
+        4352,
+        4320
       ],
       "id": "1981f6e1-11f9-4c9c-ae32-fad300b4f4f8",
       "name": "If"
     },
     {
       "parameters": {
-        "jsCode": "// n8n Code Node: Combine All Documents\nconst dataArray = $input.all();\n\nconst SEPARATOR = '\\n\\n--- DOCUMENT SEPARATOR ---\\n\\n';\nconst MAX_CHUNK_SIZE = 250000; // така ж межа, як у Chunk Splitter\n\nlet combinedText = '';\nlet totalLength = 0;\n\ndataArray.forEach((item, index) => {\n  const text = item.json?.content || item.content || '';\n  if (text.trim().length > 0) {\n    combinedText += text.trim() + SEPARATOR;\n    totalLength += text.length;\n  }\n  console.log(`Item ${index + 1}: ${text.length} chars`);\n});\n\nconst estimatedChunks = Math.ceil(totalLength / MAX_CHUNK_SIZE);\n\nconsole.log('Total combined content length:', totalLength);\nconsole.log('Estimated total chunks:', estimatedChunks);\n\nreturn [{\n  json: {\n    combinedContent: combinedText.trim(),\n    totalDocuments: dataArray.length,\n    totalLength: totalLength,\n    maxChunkSize: MAX_CHUNK_SIZE,\n    totalChunks: estimatedChunks\n  }\n}];\n"
+        "jsCode": "// n8n Code Node: Combine All Documents\nconst dataArray = $input.all();\n\nconst SEPARATOR = '\\n\\n--- DOCUMENT SEPARATOR ---\\n\\n';\nconst MAX_CHUNK_SIZE = 20000; // така ж межа, як у Chunk Splitter\n\nlet combinedText = '';\nlet totalLength = 0;\n\n// Собираем все непустые тексты в массив\nconst validTexts = [];\n\ndataArray.forEach((item, index) => {\n  const text = item.json?.data || item.data || '';\n  if (text.trim().length > 0) {\n    validTexts.push(text.trim());\n    totalLength += text.length;\n    console.log(`Item ${index + 1}: ${text.length} chars`);\n  }\n});\n\n// Объединяем с разделителем только между элементами\ncombinedText = validTexts.join(SEPARATOR);\n\nconst estimatedChunks = Math.ceil(totalLength / MAX_CHUNK_SIZE);\n\nconsole.log('Total combined content length:', totalLength);\nconsole.log('Number of documents:', validTexts.length);\nconsole.log('Estimated total chunks:', estimatedChunks);\n\nreturn [{\n  json: {\n    combinedContent: combinedText,\n    totalDocuments: validTexts.length,\n    totalLength: totalLength,\n    maxChunkSize: MAX_CHUNK_SIZE,\n    totalChunks: estimatedChunks\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5440,
-        4480
+        4128,
+        4320
       ],
       "id": "e2dfddcd-a1fc-48d8-b780-8be266b334aa",
       "name": "Split Data into Chunks2"
@@ -677,8 +525,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6000,
-        4304
+        4688,
+        4144
       ],
       "id": "1a1e0e9b-3831-4f9f-846f-a9996a22b974",
       "name": "Prepare Chunk for Processing5"
@@ -690,8 +538,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6112,
-        4784
+        4800,
+        4624
       ],
       "id": "5b196e5d-b951-4923-8ad5-7cf83de14e73",
       "name": "Prepare Chunk for Processing6"
@@ -701,8 +549,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        8560,
-        4480
+        7248,
+        4320
       ],
       "id": "b80ff142-87f9-4c0a-9936-60c9ffc77e7a",
       "name": "Merge12"
@@ -714,8 +562,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7056,
-        4832
+        5744,
+        4672
       ],
       "id": "19d87589-91bb-4ff5-91ef-113ac856076f",
       "name": "Code in JavaScript10"
@@ -727,8 +575,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7040,
-        4304
+        5728,
+        4144
       ],
       "id": "bed4f21b-660f-44a2-aa62-c1d807db1fa1",
       "name": "Code in JavaScript11"
@@ -746,8 +594,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        6528,
-        4224
+        5216,
+        4064
       ],
       "id": "fe5ba991-1a11-4d64-8430-763f2660076f",
       "name": "Create final summary8",
@@ -779,8 +627,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8384,
-        4704
+        7072,
+        4544
       ],
       "id": "ac1585fe-2bcb-4199-93a3-6ebea455d1b2",
       "name": "HTTP Request2",
@@ -808,8 +656,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        7888,
-        4624
+        6576,
+        4464
       ],
       "id": "487effaa-9b56-41f8-8cd5-d41488a83506",
       "name": "Copy file2",
@@ -831,8 +679,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        9200,
-        4480
+        7888,
+        4320
       ],
       "id": "9ed0fb3b-de4b-4ec6-a4bb-ec7e67f4a98c",
       "name": "Send a message3",
@@ -851,8 +699,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7664,
-        4480
+        6352,
+        4320
       ],
       "id": "6c3de139-7f5e-4fc4-992c-fdfce37832ee",
       "name": "Code2",
@@ -872,8 +720,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        6208,
-        4432
+        4896,
+        4272
       ],
       "id": "1a65432c-d7ff-42a3-bde1-42575c2a175e",
       "name": "Anthropic Chat Model"
@@ -886,8 +734,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
       "typeVersion": 1,
       "position": [
-        6224,
-        4576
+        4912,
+        4416
       ],
       "id": "5be3b2f5-45c0-49fe-a86c-3b8ee860bc7d",
       "name": "DeepSeek Chat Model"
@@ -900,8 +748,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        6368,
-        4480
+        5056,
+        4320
       ],
       "id": "9136a1e1-0524-4665-b3e5-c99ba688013d",
       "name": "Google Gemini Chat Model"
@@ -914,8 +762,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        6656,
-        4448
+        5344,
+        4288
       ],
       "id": "2a8af82d-c746-4d90-ade9-5fc611168a92",
       "name": "Structured Output Parser"
@@ -927,8 +775,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7376,
-        4352
+        6064,
+        4192
       ],
       "id": "678b33ac-96b9-4d0d-af6c-2c6df2e85d10",
       "name": "Злиття даних з чанків"
@@ -941,8 +789,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        7024,
-        4480
+        5712,
+        4320
       ],
       "id": "05020b0a-8794-4b27-86e0-f3e1c6c49f2f",
       "name": "Google Gemini Chat Model1"
@@ -955,55 +803,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
       "typeVersion": 1,
       "position": [
-        6816,
-        4656
+        5504,
+        4496
       ],
       "id": "d44ee8bf-54b6-4586-95e5-7392994e87fb",
       "name": "DeepSeek Chat Model1"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "2afbe104-2781-4ef0-b02e-8c461d917adf",
-              "leftValue": "={{ $json.stdout }}",
-              "rightValue": "PROBLEM:NONE",
-              "operator": {
-                "type": "string",
-                "operation": "contains"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3872,
-        3760
-      ],
-      "id": "9c116e30-3a45-40bd-821c-4c2af4931321",
-      "name": "no problems?"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        4112,
-        3760
-      ],
-      "id": "51736e78-6495-415f-a25d-bdb6150fbfae",
-      "name": "Merge"
     },
     {
       "parameters": {
@@ -1018,8 +822,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        6960,
-        4624
+        5648,
+        4464
       ],
       "id": "462b506d-e115-4b2a-9b81-0ef86d0b8333",
       "name": "Anthropic Chat Model1"
@@ -1028,20 +832,26 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1",
+          "value": "gpt-5.4-nano",
           "mode": "list",
-          "cachedResultName": "gpt-4.1"
+          "cachedResultName": "gpt-5.4-nano"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        6528,
-        4432
+        5216,
+        4272
       ],
       "id": "8616c226-8dfd-4ad5-af76-0254182f2054",
-      "name": "OpenAI Chat Model5"
+      "name": "OpenAI Chat Model5",
+      "credentials": {
+        "openAiApi": {
+          "id": "6WxABrGkJMVqyaUq",
+          "name": "OpenAI account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1056,11 +866,17 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        6464,
-        5376
+        5152,
+        5216
       ],
       "id": "bc252db4-1b26-433c-b202-5c13494dadbc",
-      "name": "OpenAI Chat Model6"
+      "name": "OpenAI Chat Model6",
+      "credentials": {
+        "openAiApi": {
+          "id": "6WxABrGkJMVqyaUq",
+          "name": "OpenAI account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1075,8 +891,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        6480,
-        4896
+        5168,
+        4736
       ],
       "id": "dd3f5c02-72b1-4d78-82d9-818d34cce5b6",
       "name": "Create final summary9",
@@ -1093,8 +909,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        6608,
-        5120
+        5296,
+        4960
       ],
       "id": "080495c3-d3a4-49ab-bed1-059c9fd14072",
       "name": "Structured Output Parser1"
@@ -1112,22 +928,17 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        6480,
-        5104
+        5168,
+        4944
       ],
       "id": "54692e06-7bed-4e88-8a37-85b50b59f84a",
-      "name": "OpenAI Chat Model7"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-pdf-ocr.pdfOcr",
-      "typeVersion": 1,
-      "position": [
-        3680,
-        3568
-      ],
-      "id": "a242f4b3-dd9a-4822-8ac8-27cea583c1f1",
-      "name": "PDF OCR"
+      "name": "OpenAI Chat Model7",
+      "credentials": {
+        "openAiApi": {
+          "id": "6WxABrGkJMVqyaUq",
+          "name": "OpenAI account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1136,28 +947,11 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        3504,
+        2800,
         4016
       ],
       "id": "b7c6fd13-8a9b-4d5f-8501-a32d4df96e42",
       "name": "Loop Over Items"
-    },
-    {
-      "parameters": {
-        "operation": "boxes",
-        "granularity": "paragraphs",
-        "options": {
-          "language": "eng"
-        }
-      },
-      "type": "n8n-nodes-tesseractjs.tesseractNode",
-      "typeVersion": 1,
-      "position": [
-        3920,
-        3552
-      ],
-      "id": "82cfa5f4-79ce-4353-a972-7079859bfa09",
-      "name": "Tesseract"
     },
     {
       "parameters": {
@@ -1166,7 +960,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3904,
+        3200,
         4064
       ],
       "id": "b058f5f3-d9f1-47e0-9c79-33d06087c244",
@@ -1200,7 +994,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        3696,
+        2992,
         4064
       ],
       "id": "c9c65664-b6fe-41ce-a75a-54aac3f877c6",
@@ -1216,7 +1010,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        4112,
+        3408,
         4064
       ],
       "id": "543f80ba-a05b-4f94-8ab1-c27698a3ba7c",
@@ -1249,7 +1043,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        4320,
+        3616,
         4064
       ],
       "id": "8602e161-13f0-43cf-b09e-9e32dd7a6083",
@@ -1278,6 +1072,58 @@
       ],
       "id": "23fdbffa-f6f1-4f44-8402-b42789c0e4bb",
       "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2240,
+        4464
+      ],
+      "id": "63936796-cb82-42a6-9270-032954ba7900",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.all().map(i => i.json);\n\n// Функция для переименования ключей __EMPTY в Value, Value_1, Value_2 и т.д.\nconst renameEmptyKeys = (row) => {\n  const newRow = {};\n  let counter = 0;\n  \n  for (const key in row) {\n    if (key === '__EMPTY') {\n      newRow['Value'] = row[key];\n    } else if (key.startsWith('__EMPTY_')) {\n      // Извлекаем номер из __EMPTY_1, __EMPTY_2 и т.д.\n      const match = key.match(/__EMPTY_(\\d+)/);\n      if (match) {\n        newRow[`Value_${match[1]}`] = row[key];\n      } else {\n        newRow[key] = row[key];\n      }\n    } else {\n      newRow[key] = row[key];\n    }\n  }\n  \n  return newRow;\n};\n\n// Применяем переименование ко всем строкам\nconst renamedData = inputData.map(row => renameEmptyKeys(row));\n\n// Преобразуем массив в JSON строку\nconst dataString = JSON.stringify(renamedData);\n\n// Возвращаем данные в нужном формате\nreturn [{\n  json: {\n    data: dataString\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2608,
+        4576
+      ],
+      "id": "f0c93b25-44c1-4eaa-a823-782e1bbff9bc",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2560,
+        4240
+      ],
+      "id": "2149e49a-c8bb-4829-80b8-458370e46565",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.all().map(i => i.json);\n\n// Функция для переименования ключей __EMPTY в Value, Value_1, Value_2 и т.д.\nconst renameEmptyKeys = (row) => {\n  const newRow = {};\n  let counter = 0;\n  \n  for (const key in row) {\n    if (key === '__EMPTY') {\n      newRow['Value'] = row[key];\n    } else if (key.startsWith('__EMPTY_')) {\n      // Извлекаем номер из __EMPTY_1, __EMPTY_2 и т.д.\n      const match = key.match(/__EMPTY_(\\d+)/);\n      if (match) {\n        newRow[`Value_${match[1]}`] = row[key];\n      } else {\n        newRow[key] = row[key];\n      }\n    } else {\n      newRow[key] = row[key];\n    }\n  }\n  \n  return newRow;\n};\n\n// Применяем переименование ко всем строкам\nconst renamedData = inputData.map(row => renameEmptyKeys(row));\n\n// Преобразуем массив в JSON строку\nconst dataString = JSON.stringify(renamedData);\n\n// Возвращаем данные в нужном формате\nreturn [{\n  json: {\n    data: dataString\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2928,
+        4352
+      ],
+      "id": "bf8cbde0-5256-48f9-8ed6-7985a6aba50c",
+      "name": "Code in JavaScript"
     }
   ],
   "connections": {
@@ -1319,9 +1165,9 @@
       "main": [
         [
           {
-            "node": "Content4",
+            "node": "Merge3",
             "type": "main",
-            "index": 0
+            "index": 3
           }
         ]
       ]
@@ -1355,14 +1201,14 @@
         ],
         [
           {
-            "node": "Extract from File3",
+            "node": "Loop Over Items2",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Extract from File4",
+            "node": "Loop Over Items1",
             "type": "main",
             "index": 0
           }
@@ -1424,17 +1270,6 @@
         ]
       ]
     },
-    "Content4": {
-      "main": [
-        [
-          {
-            "node": "Merge3",
-            "type": "main",
-            "index": 5
-          }
-        ]
-      ]
-    },
     "Code in JavaScript2": {
       "main": [
         [
@@ -1450,7 +1285,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript5",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -1461,7 +1296,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "Code in JavaScript1",
             "type": "main",
             "index": 0
           }
@@ -1475,28 +1310,6 @@
             "node": "Switch1",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "Merge3",
-            "type": "main",
-            "index": 4
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript5": {
-      "main": [
-        [
-          {
-            "node": "Merge3",
-            "type": "main",
-            "index": 3
           }
         ]
       ]
@@ -1522,66 +1335,6 @@
           },
           {
             "node": "Contain attachments?1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge2": {
-      "main": [
-        [
-          {
-            "node": "no problems?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Upload pdf": {
-      "main": [
-        [
-          {
-            "node": "PDFco Api",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "PDFco Api": {
-      "main": [
-        []
-      ]
-    },
-    "Read Processed File1": {
-      "main": [
-        [
-          {
-            "node": "Upload pdf",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Content": {
-      "main": [
-        [
-          {
-            "node": "Merge3",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Подготовка без обработки": {
-      "main": [
-        [
-          {
-            "node": "Read Processed File1",
             "type": "main",
             "index": 0
           }
@@ -1770,28 +1523,6 @@
         ]
       ]
     },
-    "no problems?": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Подготовка без обработки",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "OpenAI Chat Model4": {
       "ai_languageModel": [
         [
@@ -1858,16 +1589,11 @@
         ]
       ]
     },
-    "PDF OCR": {
-      "main": [
-        []
-      ]
-    },
     "Loop Over Items": {
       "main": [
         [
           {
-            "node": "Content",
+            "node": "Merge3",
             "type": "main",
             "index": 0
           }
@@ -1879,11 +1605,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Tesseract": {
-      "main": [
-        []
       ]
     },
     "Wait": {
@@ -1958,6 +1679,64 @@
           }
         ]
       ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "Extract from File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Extract from File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -1970,118 +1749,22 @@
   "staticData": null,
   "meta": null,
   "pinData": {
-    "Merge1": [
+    "Split Data into Chunks2": [
       {
         "json": {
-          "originalName": "0913625 B.C. Ltd. - CSR.pdf",
-          "contentType": "application/pdf"
-        },
-        "binary": {
-          "data": {
-            "mimeType": "application/pdf",
-            "fileType": "pdf",
-            "fileExtension": "pdf",
-            "data": "filesystem-v2",
-            "fileName": "0913625 B.C. Ltd. - CSR.pdf",
-            "id": "filesystem-v2:workflows/1tp5ERA85rjAAQ18/executions/401/binary_data/81f04fda-822d-47c6-a0bb-91e6232313b8",
-            "fileSize": "150 kB",
-            "bytes": 149636
-          }
+          "combinedContent": "=== Page 1 ===\n\\)\n\nCENTRAL SECURITIES REGISTER\n\n0913625 B.C. LTD.\n\nClass A Common shares without par value\n\nDate Share Date Share Full Name and Address of Number Acquired by If Transferred, from | Cert. Consideration Paid to Company\nCertificate Certificate Shareholder of Shares Allotment, whom No. 7\nIssued Cancelled Conversion, Cash or Paid Per Share\nTransfer (or) Other Other Than Cash\nCash Particulars\n[Cancel detail]s\nJun 21, 2011 Matthew Phillips 1,000 | Allotment 1A Cash | $0.01\n2010 Government Street (1,000)\n\nVictoria, BC\nV8T 4P1\n(Incorporator)\n\nTotal issued:\n\n1,000\n\nPage 1\n\n=== Page 2 ===\nCENTRAL SECURITIES REGISTER\n\n0913625 B.C. LTD.\n\nClass C Common shares without par value\n\nDate Share Date Share Full Name and Address of ‘Number Acquired by If Transferred, from | Cert. Consideration Paid to Company\nCertificate Certificate Shareholder of Shares Allotment, whom No. 7\nIssued Cancelled Conversion, Cash or Paid Per Share\nTransfer (or) — Other Than Cash\nCash Particulars\n[Cancel detail]s\nJun 23, 2011 Matthew Phillips, in trust for 1,000 | Allotment 1C | Cash | $0.01\nPhillips Family Trust (1,000)\n2010 Government Street\nVictoria, BC\nV8T 4P1\nTotal issued: | 1,000\n\nPage 1\n\n=== Page 3 ===\nCENTRAL SECURITIES REGISTER\n\n0913625 B.C. LTD.\n\nClass BB Preferred shares without par value\n\nDate Share Date Share Full Name and Address of Number Acquired by If Transferred, from | Cert. Consideration Paid to Company\nCertificate Certificate Shareholder of Shares Allotment, whom No. 7\nIssued Cancelled Conversion, Cash or Paid Per Share\nTransfer (or) — Other Than Cash\nCash Particulars\n[Cancel detail]\nNov 18, 2020 1274970 B.C. Ltd. 1 | Allotment (1) 1BB | Cash | $1.00\n568 Starling Lane\nVictoria, BC V9E 2A9\nTotal issued: | 1\n\nPage 1\n\n--- DOCUMENT SEPARATOR ---\n\n=== Page 1 ===\nSINCE 1959\n\nJ.E. ANDERSON\nM)eAW S ASSOCIATES\n\nSURVEYORS - ENGINEERS\n\n4212 Glanford Avenue\nVictoria, BC V8Z 4B7\n(250) 727 - 2214\n\n861-865 Esquimalt Holdings Ltd. c/o Matt McLash Invoice number 0063059\nmat@mclash.ca Date 12/13/2024\n\n568 Starling Lane\n\nVictoria, BC V9E 2A9 Project 33496 861-865 Esquimalt Road\n\nFor services rendered through November 30, 2024\n\nFee Summary\n\nContract Current Prior Total\nDescription Amount Billed Billed Billed\nConstruction Drawings\nBP Permit 0.00 3,213 75 5,193.25, 8,407.00\nMeetings 0.00 515 00 218.75 733.75\nTender 0.00 0.00 0.00 0.00\nIFC Documents 0.00 000 0.00 0.00\nBC Hydro Servicing 0.00 000 33.75 33.75\nSubtotal 0.00 3,728 75 5,445.75, 9,174.50\nConstruction Services\nContract Adminstration 0.00 000 0.00 0.00\nConstruction Inspection 0.00 000 0.00 0.00\nConstruction Layout 0.00 000 0.00 0.00\nRecord Drawings 0.00 000 0.00 0.00\nSubtotal 0.00 000 0.00 0.00\nTotal 0.00 3,728 75 5,445.75 9,174.50\nConstruction Drawings\nBP Permit\nWorks completed include:\nEffort associated with Frontage Design and grading\nEffort associated with onsite SWM design\nEffort associated with BC Hydro coordination\nDrafting and design effort associated with Building Permit drawings\nMisc correspondence and coordination with the Consultant Team\nBilled\nDate Hours Rate Amount\nE1 - Senior Engineer/ Project Manager\n10/03/2024 0.75 190.00 142.50\n10/17/2024 0.50 190.00 95.00\n10/21/2024 0.50 190.00 95.00\n10/22/2024 0.50 190.00 95.00\n11/25/2024 1.50 190.00 285.00\nPayment Terms: Net 30 Interest applied at 1% GST# 113466189RTO001\n\nPage 1 of 3\n\n=== Page 2 ===\n861-865 Esquimalt Holdings Ltd. c/o Matt McLash Invoice number 0063059\nProject 33496 861-865 Esquimalt Road Date 12/13/2024\nConstruction Drawings\nBP Permit\nWorks completed include:\nEffort associated with Frontage Design and grading\nEffort associated with onsite SWM design\nEffort associated with BC Hydro coordination\nDrafting and design effort associated with Building Permit drawings\nMisc correspondence and coordination with the Consultant Team\nBilled\nDate Hours Rate Amount\nSubtotal 3.75 712.50\nE7 - Engineering Tech 3\n10/02/2024 0.50 115.00 57.50\n10/16/2024 1.00 115.00 115.00\n10/21/2024 100 115.00 115.00\n10/22/2024 175 115.00 201.25\n10/25/2024 050 115.00 57.50\n10/29/2024 075 115.00 86.25\n11/04/2024 050 115.00 57.50\n11/06/2024 050 115.00 57.50\n11/12/2024 100 115.00 115.00\n11/13/2024 025 115.00 28.75\n11/18/2024 250 115.00 287.50\n11/19/2024 300 115.00 345.00\n11/20/2024 175 115.00 201.25\n11/21/2024 050 115.00 57.50\n11/25/2024 400 115.00 460.00\n11/26/2024 100 115.00 115.00\n11/28/2024 125 115.00 143.75\nSubtotal 2175 2,501.25\nPhase subtotal 3,213.75\nMeetings\nWorks completed include.\nAttendance at Consultant Meetings as requested\nBilled\nDate Hours Rate Amount\nE1 - Senior Engineer/ Project Manager\n10/03/2024 0.50 190.00 95.00\n10/17/2024 0.50 190.00 95.00\n11/14/2024 0.50 190.00 95.00\nSubtotal 1.50 285.00\nE7 - Engineering Tech 3\n10/17/2024 0.50 115.00 57.50\n10/31/2024 0.50 115.00 57.50\n11/14/2024 0.25 115.00 28.75\n11/28/2024 0.75, 115.00 86.25\nSubtotal 2.00 230.00\nPhase subtotal 515.00\nConstruction Drawings subtotal 3,728.75\nPayment Terms: Net 30 Interest applied at 1% GST# 113466189RT0001\n\nPage 2 of 3\n\n=== Page 3 ===\n861-865 Esquimalt Holdings Ltd. c/o Matt McLash Invoice number 0063059\n\nProject 33496 861-865 Esquimalt Road Date 12/13/2024\nInvoice subtotal 3,728.75\nGST 186.44\nInvoice total 3,915.19\nAging Summary\nInvoice Number Invoice Date Outstanding Current Over 30 Over 60 Over 90 Over 120\n0063059 12/13/2024 3,915.19 3,915.19\nTotal 3,915.19 3,915.19 0.00 0.00 0.00 0.00\nProject Manager\nRoscoe E. Tuck\nSend all e-transfers to: payments@jeanderson.com\nPayment Terms: Net 30 Interest applied at 1% GST# 113466189RT0001\n\nPage 3 of 3\n\n--- DOCUMENT SEPARATOR ---\n\n=== Page 1 ===\n(i) be held in an interest-bearing trust account by the Deposit Holder with interest accruing\nLp 10 the benefit of the Purchaser;\n\nGi)___be refundable to the Purchaser in the event that the Purchaser does not satisfy or waive, in\nwriting, the Subject Conditions as set out in Clause 4 and Schedule B herein,\n\n(\n\nshall be credited towards payment of the Purchase Price on the Closing Date.\n\n»)_ The Purchaser shall increase the Deposit by a further Two Hundred Thousand ($200,000) dollars\nby way of a further deposit (the “Additional Deposit”) delivered to the Deposit Holder within\nthree (3) business days following the Purchaser's written notice confirming either satisfaction or\nwaiver, as the case may be, of the Subject Conditions contained in Clause 4 and Schedule B of\nthis Agreement. The Deposit shall be credited towards payment of the Purchase Price on the\nClosing Date and shall be non-refundable;\n\n¢\n\nThe balance of the Purchase Price, subject to adjustments, shall be paid by solicitor’s trust cheque\non the Closing Date.\n\nFor the purposes of this Agreement, the “Deposit Holder” shall mean Johns Southward Glazier Walton &\nMargetts, LLP. ‘The parties agree that all deposit monies paid pursuant to this Agreement will be held by\nthe Deposit Holder as a stakeholder for the parties in accordance with the Real Estate Services Act\n(British Columbia),\n\nUSIONS\n\nThe Purchase Price includes any building, or structure and all improvements, fixtures, appliances,\nappurtenances and attachments to such building(s) or structure(s) including but not being limited to ali\nelectric, plumbing, mechanical and heating fixtures, machinery, equipment and other chattels used in the\nrepair, management and maintenance of the Property, which are owned by the Vendor as of the date\nhereof.\n\n}. RIGHT TO ASSIGN\n\nSubject to Clause 20, the Vendor and Purchaser agree that this Offer: (a) must not be assigned without the\nwritten consent of the Vendor however such consent may not be unreasonably withheld if the assignee 1s\nan affiliate of the Purchaser; and (b) the Vendor is entitled to any profit resulting from an assignment of\nthe Offer by the Purchaser or any subsequent assignee. No such Assignment will release the Purchaser\nfrom its obligations hereunder. However, the Purchaser shall have the right to assign this Agreement to\nan affiliate of the Purchaser without consent and upon such assignment being made it is understood and\nagreed that the Purchaser shall be relieved of any covenants, obligations and/or liabilities herein contained\nand the Vendor agrees to complete the transaction herein with the said assignee as if the assignee were the\noriginal Purchaser.\n\nSUBJECT CONDITIONS\n\nThe obligation of the Purchaser to complete the purchase of the Property is conditional upon satisfaction\nor waiver by the Purchaser of the following Subject Conditions on or before Forty Five (45) calendar days\nfollowing the date of acceptance of this Purchase and Sale Agreement (the \"Subject Conditions\"):\n\n--- DOCUMENT SEPARATOR ---\n\n=== Page 1 ===\nRefer to Schedule B, “Subject Conditions” herein.\n\nHowever, if the Purchaser's waiver date falls on a date that is on the weekend or a statutory holiday then\nthe Pulhaser’s Subject Conditions date shall be moved to the next weekday (that is not a holiday). The\nVendor shall grant the Purchaser and its service providers access to the Property and the Vendor shall\ndeliver such reports, studies, information and files within the possession or control of the Vendor which\nthe Purchaser reasonably requests and that are relevant to the purchase of the Property ‘The Conditions\nreferenced in Schedule B herein are for the sole benefit of the Purchaser and may be waived unilaterally\nby the Purchaser in sts unfettered discretion If the Purchaser does not give the Vendor notice of\nsatisfaction or waiver of such Subject Conditions within the time therein provided, then the Purchaser's\ntion to Purchase the Property will be at an end\n\nThe Vendor acknowledges receipt of $10.00 and other good and valuable consideration in consideration\nof the Vendor not revoking its acceptance of the Purchaser's Offer hereunder while this Agreement\nremains subject to the Purchaser's Subject Conditions and the parties agree that this Agreement will\nbecome an unconditional Contract for Purchase and Sale of the Property forthwith upon the satisfaction or\nwaiver of the Subject Conditions in this Agreement.\n\nco: ' __ Ninety (30) O/\n\n‘The purchase and sale of the Property shall occur Ninety-(90) days following the Purchaser waiving its\nSubject Conditions (the \"Closing Date\") or such earlier date as agreed to in writing by the parties\nprovided. However, if this date falls on a day that the Land Title Office is not open to the public for\nbusiness it shall be moved to the next day that the Land Title Office is open\n\nCLOSING PROCEDURES\n\n‘The terms of closing on the Closing Date shall be as follows\n\na) The Purchaser’s Solicitor shall deliver to the Vendors’ Solicitor five (5) calendar days prior to the\nClosing Date the following Closing Documents\n\n(i) A Form A Freehold Transfer conveying the Property to the Purchaser;\n\n(ii) The Vendors’ Statements of Adjustments\nb) The balance of the Purchase Price shall be deposited in the trust account of the Purchaser's solicitor\nuntil the Transfer or Transfers have been accepted for registration in the Land Title Office and\n\ncompletion of a post-acceptance index search indicating that title will issue to the Purchaser subject\nonly to the Permitted Exceptions\n\n©) After such post-acceptance index search, the funds so deposited shall be delivered to the Vendor by\nsolicitor’s trust cheque.\nd) If the Vendor has existing financial charges to be cleared from the title the Vendor, while still\n\nrequired to clear such charges, may wait to pay and discharge existing financial charges needing to be\ncleared until immediately after receipt of the Purchase Price, but in this event, the Purchaser may\nthe Purchase Price to a lawyer or notary in trust, on undertakings to pay and discharge the finan\ncharges, and remit the balance, if any, to the Vendor.\n\n--- DOCUMENT SEPARATOR ---\n\n=== Page 1 ===\nSALE AGREEMENT\nThis Real Estate Purchase and Sale Agreement (the \"Agreement”) made as of this 22 day of October 2020,\n\nBETWEEN:\nSTERKTE HOLDINGS LTD. (or nominee)\nSuite 204 - 655 Tyee Road\nVictoria, BC, V9A 6X5\n\n(the \"PURCHASER\")\n\nAND:\n\n861-865 ESQUIMALT HOLDINGS LTD., INC.NO. BC118390S\nSuite 1801 ~ 701 West Georgia Street\nVancouver, BC, V7Y 1C6\n\n(‘the “VENDOR\")\n\nIn consideration of the mutual covenants and agreements herein contained and for other good and valuable\nconsideration, the Purchaser hereby agrees to purchase from the Vendor and the Vendor hereby agrees to sell\nto the Purchaser those lands and buildings having a civic address described as.\n\n861, 863, 865 Esquimalt Road, Esquimalt, BC\n\nand having a legal description and more partigularly known and described as:\nESQUIMALT\n\nLOT 9, SECTION 11, B¥@eHvtvrbe’ DISTRICT, PLAN 265 (PID 001-180-991) &\nCW LOT 10, SECTION 11, ESQUIMALT DISTRICT, PLAN 265 (PID 015-233-227)\ncomprising of approximately 16,627 square fect of land area and buildings (collectively, the “Property”)\n\nTHIS REAL ESTATE PURCHASE AND SALE AGREEMENT IS MADE ON THE FOLLOWING TERMS\nAND CONDITIONS:\n\nea - $2,800,000 C A\n1. PURCHASE PRICE —\n\nTWO MILLION MINE-HUNDREDHIETY THOUSAND\nThe Purchase Price shall be TWO-MILLLION-SIX_HUNDRED- SIXTY THOUSAND—THREE\n-HUNDRED-TWENTY ($2,660,320) DOLLRS in lawful money of Canada (the \"Purchase Price\") and\nshall be paid as follows. ¢ 4\n\na) The sum of Ten Thousand ($103 ars (the “Deposit”) by way of a deposit delivered to the\nDeposit Holder (as defined below) within three (3) business days of acceptance of this\nAgreement by the Vendor. The Deposit shall\n\n--- DOCUMENT SEPARATOR ---\n\n[{\"PERSONAL NET WORTH STATEMENT\":\"Name:\",\"Value\":\"Kevin Zhong  Lin\"},{\"PERSONAL NET WORTH STATEMENT\":\"Address:\",\"Value\":\"4549 w 12 Ave, Vancouver V6R 2R4\"},{\"PERSONAL NET WORTH STATEMENT\":\"Telephone:\",\"Value\":\"6047831538\"},{\"PERSONAL NET WORTH STATEMENT\":\"S.I.N.\",\"Value\":508015211},{\"PERSONAL NET WORTH STATEMENT\":\"Employer/Company Name:\",\"Value\":\"YOGI HOUSE NET INC.\"},{\"PERSONAL NET WORTH STATEMENT\":\"Length of Service:\",\"Value\":\"20 YEARS\"},{\"PERSONAL NET WORTH STATEMENT\":\"SPOUSE\",\"Value\":\"HUI-WEN LIU\"},{\"PERSONAL NET WORTH STATEMENT\":\"BANKING INFORMATION\"},{\"PERSONAL NET WORTH STATEMENT\":\"Bank:\",\"Value\":\"HSBC, CIBC, TD\"},{\"PERSONAL NET WORTH STATEMENT\":\"ASSETS\"},{\"PERSONAL NET WORTH STATEMENT\":\"Description\",\"Value_1\":\"Value\",\"Value_2\":\"Mortgage \"},{\"PERSONAL NET WORTH STATEMENT\":\"Cash & Short Term Deposits\",\"Value_1\":226000},{\"PERSONAL NET WORTH STATEMENT\":\" RESP, TFSA, RRSP\",\"Value_1\":1258000},{\"PERSONAL NET WORTH STATEMENT\":\"Other Receivable\",\"Value_1\":130000},{\"Value_1\":1614000,\"Value_2\":0},{\"PERSONAL NET WORTH STATEMENT\":\"Real Estate Holdings:\",\"Value\":\"Year Purchased\",\"Value_1\":\"Ownership\",\"Value_2\":\"Value\",\"Value_3\":\"Lender\",\"30-Jul-25\":\"Mortgage amount\",\"Value_4\":\"Pro-rated Equity\",\"Value_5\":\"title under (if under company name)\"},{\"PERSONAL NET WORTH STATEMENT\":\"4549  W 12 Ave, Vancouver, BC\",\"Value_1\":0.5,\"Value_2\":2766400,\"30-Jul-25\":1072559,\"Value_4\":846920.5},{\"PERSONAL NET WORTH STATEMENT\":\"6929 Balmoral St, Burnaby\",\"Value\":2016,\"Value_1\":0.1189,\"Value_2\":6800000,\"30-Jul-25\":5000000,\"Value_4\":214020,\"Value_5\":\"1092358 Ltd\"},{\"PERSONAL NET WORTH STATEMENT\":\"19948 55A Langley\",\"Value\":2018,\"Value_1\":0.1868,\"Value_2\":15130000,\"30-Jul-25\":5500000,\"Value_4\":1798884,\"Value_5\":\"1166934 B C Ltd.\"},{\"PERSONAL NET WORTH STATEMENT\":\"11939 Stephens St. Maple Ridge\",\"Value\":2021,\"Value_1\":1,\"Value_2\":1344000,\"30-Jul-25\":783414,\"Value_4\":560586},{\"PERSONAL NET WORTH STATEMENT\":\"1487 e 27 Ave, Vancouver\",\"Value\":2017,\"Value_1\":1,\"Value_2\":1708500,\"Value_3\":\"hsbc\",\"30-Jul-25\":1148700,\"Value_4\":559800},{\"PERSONAL NET WORTH STATEMENT\":\"1495 e 27 Ave, Vancouver\",\"Value\":2018,\"Value_1\":1,\"Value_2\":1758500,\"Value_3\":\"cibc\",\"30-Jul-25\":936922,\"Value_4\":821578},{\"PERSONAL NET WORTH STATEMENT\":\"7137 16 ave, burnaby\",\"Value\":2017,\"Value_1\":1,\"Value_2\":1712300,\"Value_3\":\"rbc\",\"30-Jul-25\":479165,\"Value_4\":1233135},{\"PERSONAL NET WORTH STATEMENT\":\"4823 Earles St.Vancouver\",\"Value\":2021,\"Value_1\":1,\"Value_2\":1540400,\"Value_3\":\"cibc\",\"30-Jul-25\":623467,\"Value_4\":916933},{\"PERSONAL NET WORTH STATEMENT\":\"5025 Earles St. Vancouver\",\"Value\":2021,\"Value_1\":1,\"Value_2\":1535600,\"Value_3\":\"hsbc\",\"30-Jul-25\":784161,\"Value_4\":751439},{\"PERSONAL NET WORTH STATEMENT\":\"3831 sandell st, burnaby\",\"Value\":2019,\"Value_1\":1,\"Value_2\":1706000,\"Value_3\":\"rbc\",\"30-Jul-25\":668741,\"Value_4\":1037259},{\"PERSONAL NET WORTH STATEMENT\":\"4140 Brownlea road richmond\",\"Value\":2022,\"Value_1\":1,\"Value_2\":1691500,\"Value_3\":\"cibc\",\"30-Jul-25\":468246,\"Value_4\":1223254},{\"PERSONAL NET WORTH STATEMENT\":\"Net Value of Assets\",\"Value_1\":8.3057,\"Value_2\":37693200,\"Value_4\":9963808.5},{\"PERSONAL NET WORTH STATEMENT\":\"NET ASSETS\"},{\"PERSONAL NET WORTH STATEMENT\":\"NET WORTH\",\"Value_2\":11577808.5}]\n\n--- DOCUMENT SEPARATOR ---\n\n[{\"OPUS Langley Budget Profroma\":\"Land Legal Address\",\"Value_1\":\"19948 55A Avenue Langley\"},{\"OPUS Langley Budget Profroma\":\"Total Land Area (sq ft)\",\"Value_1\":43917},{\"OPUS Langley Budget Profroma\":\"Total Buildable (sq ft)\",\"Value_1\":92226},{\"OPUS Langley Budget Profroma\":\"Average sellable per sq ft\",\"08/8/2025\":886.17981},{\"OPUS Langley Budget Profroma\":\"Total Sellable (sq ft)\",\"Value_1\":76779,\"08/8/2025\":68039999.63199},{\"OPUS Langley Budget Profroma\":\"Parking\",\"Value_1\":\"40 x $20000\",\"08/8/2025\":800000},{\"OPUS Langley Budget Profroma\":\"Revenue\",\"08/8/2025\":68839999.63199},{\"OPUS Langley Budget Profroma\":\"LAND \"},{\"OPUS Langley Budget Profroma\":\"Land Value\",\"Value_1\":11780000,\"Value_2\":127.72970745776679},{\"OPUS Langley Budget Profroma\":\"Total\",\"08/8/2025\":11780000},{\"OPUS Langley Budget Profroma\":\"CONSULTANTS/MANAGEMENT\"},{\"OPUS Langley Budget Profroma\":\"Architect Incl. Disbursements\",\"Value_1\":525000,\"Value_2\":5.692537896037994},{\"OPUS Langley Budget Profroma\":\"Project Manager\",\"Value_1\":480000,\"Value_2\":5.204606076377594},{\"OPUS Langley Budget Profroma\":\"Arborist\",\"Value_1\":3500,\"Value_2\":0.03795025264025329},{\"OPUS Langley Budget Profroma\":\"Traffic\",\"Value_1\":8500,\"Value_2\":0.09216489926918656},{\"OPUS Langley Budget Profroma\":\"Electrical\",\"Value_1\":43000,\"Value_2\":0.46624596100882615},{\"OPUS Langley Budget Profroma\":\"Environment\",\"Value_1\":5600,\"Value_2\":0.060720404224405264},{\"OPUS Langley Budget Profroma\":\"Energy\",\"Value_1\":18250,\"Value_2\":0.19788346019560646},{\"OPUS Langley Budget Profroma\":\"Mechanical\",\"Value_1\":80000,\"Value_2\":0.8674343460629323},{\"OPUS Langley Budget Profroma\":\"Surveyor\",\"Value_1\":18000,\"Value_2\":0.1951727278641598},{\"OPUS Langley Budget Profroma\":\"Geotech\",\"Value_1\":18250,\"Value_2\":0.19788346019560646},{\"OPUS Langley Budget Profroma\":\"Structural\",\"Value_1\":83000,\"Value_2\":0.8999631340402924},{\"OPUS Langley Budget Profroma\":\"Landscape\",\"Value_1\":9600,\"Value_2\":0.10409212152755189},{\"OPUS Langley Budget Profroma\":\"Hazmat\",\"Value_1\":4800,\"Value_2\":0.05204606076377594},{\"OPUS Langley Budget Profroma\":\"Fire Sprinkler\",\"Value_1\":42000,\"Value_2\":0.45540303168303947},{\"OPUS Langley Budget Profroma\":\"Building Envelope\",\"Value_1\":38300,\"Value_2\":0.4152841931776289},{\"OPUS Langley Budget Profroma\":\"Interior\",\"Value_1\":35000,\"Value_2\":0.3795025264025329},{\"OPUS Langley Budget Profroma\":\"Civil\",\"Value_1\":45000,\"Value_2\":0.48793181966039945},{\"OPUS Langley Budget Profroma\":\"Code\",\"Value_1\":13500,\"Value_2\":0.14637954589811983},{\"OPUS Langley Budget Profroma\":\"Legal and Accounting\",\"Value_1\":120000,\"Value_2\":1.3011515190943985},{\"OPUS Langley Budget Profroma\":\"Total\",\"Value_2\":17.254353436124305,\"08/8/2025\":1591300},{\"OPUS Langley Budget Profroma\":\"MUNICIPAL\"},{\"OPUS Langley Budget Profroma\":\"City Fees and Permits\",\"Value_1\":4525466,\"Value_2\":103.04588200469067},{\"OPUS Langley Budget Profroma\":\"Bonding (letter of credit)\",\"Value_1\":289907,\"Value_2\":3.1434411120508314},{\"OPUS Langley Budget Profroma\":\"DCC (letter of credit)\",\"Value_1\":1649036,\"Value_2\":17.880380803677923},{\"OPUS Langley Budget Profroma\":\"Total\",\"Value_2\":70.09312991997918,\"08/8/2025\":6464409},{\"OPUS Langley Budget Profroma\":\"HARD COSTS\"},{\"OPUS Langley Budget Profroma\":\"Onsite \",\"Value_1\":34584750,\"Value_2\":375},{\"OPUS Langley Budget Profroma\":\"Offsite\",\"Value_1\":500000,\"Value_2\":5.421464662893327},{\"OPUS Langley Budget Profroma\":\"Total\",\"Value_2\":380.4214646628933,\"08/8/2025\":35084750},{\"OPUS Langley Budget Profroma\":\"FINANCING COSTS\"},{\"OPUS Langley Budget Profroma\":\"Interest on Construction- \",\"Value_1\":4255849,\"Value_2\":46.14586992821981},{\"OPUS Langley Budget Profroma\":\"Lender and Broker\",\"Value_1\":829063.088,\"Value_2\":8.989472469802442},{\"OPUS Langley Budget Profroma\":\"Letter of credit fee\",\"Value_1\":67863.005,\"Value_2\":0.7358337670505064},{\"OPUS Langley Budget Profroma\":\"QS\",\"Value_1\":30000,\"Value_2\":0.32528787977359963},{\"OPUS Langley Budget Profroma\":\"Total\",\"Value_2\":56.19646404484635,\"08/8/2025\":5182775.092999999},{\"OPUS Langley Budget Profroma\":\"MARKETING & MISC\"},{\"OPUS Langley Budget Profroma\":\"Advertising & PC\",\"Value_1\":400000,\"Value_2\":4.337171730314662},{\"OPUS Langley Budget Profroma\":\"Sales Commission (1.5% up front)\",\"Value_1\":1032599.9944798499,\"Value_2\":11.196408761952702},{\"OPUS Langley Budget Profroma\":\"Warranty - HPO\",\"Value_1\":70000,\"Value_2\":0.7590050528050658},{\"OPUS Langley Budget Profroma\":\"liability Insurance\",\"Value_1\":150000,\"Value_2\":1.6264393988679982},{\"OPUS Langley Budget Profroma\":\"Total\",\"Value_2\":17.91902494394043,\"08/8/2025\":1652599.99447985},{\"OPUS Langley Budget Profroma\":\"CONTIGENCY\"},{\"OPUS Langley Budget Profroma\":\"Contingency @ 5% of Soft Cost\",\"Value_1\":744554.2043739925,\"Value_2\":8.073148617244513},{\"OPUS Langley Budget Profroma\":\"Contingency @ 5% of Hard Cost\",\"Value_1\":1754237.5,\"Value_2\":19.021073233144666},{\"OPUS Langley Budget Profroma\":\"Total\",\"Value_2\":27.09422185038918,\"08/8/2025\":2498791.7043739925},{\"OPUS Langley Budget Profroma\":\"TOTAL DEVELOPMENT COST \",\"Value_2\":696.7083663159395,\"08/8/2025\":64254625.791853845},{\"OPUS Langley Budget Profroma\":\"PROJECT RETURN\"},{\"OPUS Langley Budget Profroma\":\"Total Revenue\",\"Value_2\":68839999.63199},{\"OPUS Langley Budget Profroma\":\"Total Project Cost\",\"Value_2\":64254625.791853845},{\"OPUS Langley Budget Profroma\":\"Gross Profit (addback L/C)\",\"Value_2\":6524316.8401361555},{\"OPUS Langley Budget Profroma\":\"Return on Cost\",\"Value_2\":0.10153847695372158},{\"OPUS Langley Budget Profroma\":\"Land Lift \",\"Value_2\":3580000},{\"OPUS Langley Budget Profroma\":\"Return on Cost (incl land lift)\",\"Value_2\":0.15725430995222095},{\"OPUS Langley Budget Profroma\":\"FINANCING PROGRAM\"},{\"OPUS Langley Budget Profroma\":\"Construction Loan \",\"Value\":48190000},{\"OPUS Langley Budget Profroma\":\"Letter of Credit\",\"Value\":1938943},{\"OPUS Langley Budget Profroma\":\"Presale Target\",\"Value\":45000000},{\"OPUS Langley Budget Profroma\":\"DPI (10% deposit)\",\"Value\":4500000},{\"OPUS Langley Budget Profroma\":\"Equity requirement\",\"Value\":9625682.791853845},{\"OPUS Langley Budget Profroma\":\"Land Equity\",\"Value\":6280000},{\"OPUS Langley Budget Profroma\":\"WIP\",\"Value\":3158999},{\"OPUS Langley Budget Profroma\":\"Equity Shortfall\",\"Value\":186683.79185384512},{\"OPUS Langley Budget Profroma\":\"CAPITAL STACK\"},{\"OPUS Langley Budget Profroma\":\"USES\",\"Value_1\":\"%\",\"Value_2\":\"SOURCES\",\"Value_3\":\"%\"},{\"OPUS Langley Budget Profroma\":\"Construction Loan\",\"Value\":48190000,\"Value_1\":0.7499849140216998,\"Value_2\":\"Land\",\"08/8/2025\":11780000,\"Value_3\":0.18333310411238066},{\"OPUS Langley Budget Profroma\":\"DPI\",\"Value\":4500000,\"Value_1\":0.07003386829420313,\"Value_2\":\"Hard Costs\",\"08/8/2025\":35084750,\"Value_3\":0.5460268356966763},{\"OPUS Langley Budget Profroma\":\"Land lift\",\"Value\":3580000,\"Value_1\":0.05571583299849938,\"Value_2\":\"Consultants\",\"08/8/2025\":1591300,\"Value_3\":0.024765532137014545},{\"OPUS Langley Budget Profroma\":\"Shareholder Equity - Cash\",\"Value\":6045682.791853845,\"Value_1\":0.09408945608738277,\"Value_2\":\"Municipal\",\"08/8/2025\":6464409,\"Value_3\":0.10060612633463586},{\"OPUS Langley Budget Profroma\":\"Letter of Credit\",\"Value\":1938943,\"Value_1\":0.030175928598214913,\"Value_2\":\"Financing\",\"08/8/2025\":5182775.092999999,\"Value_3\":0.08065995294703075},{\"Value_2\":\"Marketing & Insurance\",\"08/8/2025\":1652599.99447985,\"Value_3\":0.025719548968089475},{\"Value_2\":\"Contingency\",\"08/8/2025\":2498791.7043739925,\"Value_3\":0.03888889980417235},{\"Value_2\":\"Letter of Credit\",\"08/8/2025\":1938943},{\"OPUS Langley Budget Profroma\":\"TOTAL\",\"Value\":64254625.791853845,\"Value_1\":0.9999999999999999,\"Value_2\":\"TOTAL\",\"08/8/2025\":64254625.791853845,\"Value_3\":0.9999999999999999}]\n\n--- DOCUMENT SEPARATOR ---\n\n**Mechanics** (from [Ancient Greek](https://en.wikipedia.org/wiki/Ancient%5FGreek%5Flanguage \"Ancient Greek language\") [μηχανική](https://en.wiktionary.org/wiki/%CE%BC%CE%B7%CF%87%CE%B1%CE%BD%CE%B9%CE%BA%CE%AE#Ancient%5FGreek \"wikt:μηχανική\") _(mēkhanikḗ)_ 'of [machines](https://en.wikipedia.org/wiki/Machine \"Machine\")')[\\[1\\]](https://en.wikipedia.org/wiki/Mechanics#cite%5Fnote-1)[\\[2\\]](https://en.wikipedia.org/wiki/Mechanics#cite%5Fnote-2) is the area of [physics](https://en.wikipedia.org/wiki/Physics \"Physics\") concerned with the relationships between [force](https://en.wikipedia.org/wiki/Force \"Force\"), [matter](https://en.wikipedia.org/wiki/Matter \"Matter\"), and [motion](https://en.wikipedia.org/wiki/Motion \"Motion\") among [physical objects](https://en.wikipedia.org/wiki/Physical%5Fobject \"Physical object\").[\\[3\\]](https://en.wikipedia.org/wiki/Mechanics#cite%5Fnote-3) Forces applied to objects may result in [displacements](https://en.wikipedia.org/wiki/Displacement%5F%28vector%29 \"Displacement (vector)\"), which are changes of an object's position relative to its environment.\n\nTheoretical expositions of this branch of [physics](https://en.wikipedia.org/wiki/Physics \"Physics\") have their origins in [Ancient Greece](https://en.wikipedia.org/wiki/Ancient%5FGreece \"Ancient Greece\"), for instance, in the writings of [Aristotle](https://en.wikipedia.org/wiki/Aristotle \"Aristotle\") and [Archimedes](https://en.wikipedia.org/wiki/Archimedes \"Archimedes\")[\\[4\\]](https://en.wikipedia.org/wiki/Mechanics#cite%5Fnote-4)[\\[5\\]](https://en.wikipedia.org/wiki/Mechanics#cite%5Fnote-5)[\\[6\\]](https://en.wikipedia.org/wiki/Mechanics#cite%5Fnote-6) (see [History of classical mechanics](https://en.wikipedia.org/wiki/History%5Fof%5Fclassical%5Fmechanics \"History of classical mechanics\") and [Timeline of classical mechanics](https://en.wikipedia.org/wiki/Timeline%5Fof%5Fclassical%5Fmechanics \"Timeline of classical mechanics\")). During the [early modern period](https://en.wikipedia.org/wiki/Early%5Fmodern%5Fperiod \"Early modern period\"), scientists such as [Galileo Galilei](https://en.wikipedia.org/wiki/Galileo%5FGalilei \"Galileo Galilei\"), [Johannes Kepler](https://en.wikipedia.org/wiki/Johannes%5FKepler \"Johannes Kepler\"), [Christiaan Huygens](https://en.wikipedia.org/wiki/Christiaan%5FHuygens \"Christiaan Huygens\"), and [Isaac Newton](https://en.wikipedia.org/wiki/Isaac%5FNewton \"Isaac Newton\") laid the foundation for what is now known as [classical mechanics](https://en.wikipedia.org/wiki/Classical%5Fmechanics \"Classical mechanics\").\n\nIn the 20th century the concepts of classical mechanics were challenged by new discoveries, leading to fundamentally new approaches including [relativistic mechanics](https://en.wikipedia.org/wiki/Relativistic%5Fmechanics \"Relativistic mechanics\") and [quantum mechanics](https://en.wikipedia.org/wiki/Quantum%5Fmechanics \"Quantum mechanics\").",
+          "totalDocuments": 8,
+          "totalLength": 26923,
+          "maxChunkSize": 20000,
+          "totalChunks": 2
         },
         "pairedItem": {
           "item": 0
         }
-      },
-      {
-        "json": {
-          "originalName": "2024.12.13 JEA Esquimalt invoice 33496.pdf",
-          "contentType": "application/pdf"
-        },
-        "binary": {
-          "data": {
-            "mimeType": "application/pdf",
-            "fileType": "pdf",
-            "fileExtension": "pdf",
-            "data": "filesystem-v2",
-            "fileName": "2024.12.13 JEA Esquimalt invoice 33496.pdf",
-            "id": "filesystem-v2:workflows/1tp5ERA85rjAAQ18/executions/401/binary_data/eef783bf-4ccd-43f8-923d-3ddee9ac556e",
-            "fileSize": "189 kB",
-            "bytes": 188750
-          }
-        },
-        "pairedItem": {
-          "item": 1
-        }
-      },
-      {
-        "json": {
-          "originalName": "2026-05-25 10_18_52-2020.10.22 Fully Executed OTP - 861-865 Esquimalt Road.pdf — Mozilla Firefox.png",
-          "contentType": "image/*"
-        },
-        "binary": {
-          "data": {
-            "mimeType": "image/png",
-            "fileType": "image",
-            "fileExtension": "png",
-            "data": "filesystem-v2",
-            "fileName": "2026-05-25 10_18_52-2020.10.22 Fully Executed OTP - 861-865 Esquimalt Road.pdf — Mozilla Firefox.png",
-            "id": "filesystem-v2:workflows/1tp5ERA85rjAAQ18/executions/401/binary_data/4ceb23f7-6a76-40c6-9515-8026cd362fa7",
-            "fileSize": "358 kB",
-            "bytes": 358097
-          }
-        },
-        "pairedItem": {
-          "item": 0,
-          "input": 1
-        }
-      },
-      {
-        "json": {
-          "originalName": "2026-05-25 10_19_03-2020.10.22 Fully Executed OTP - 861-865 Esquimalt Road.pdf — Mozilla Firefox.png",
-          "contentType": "image/*"
-        },
-        "binary": {
-          "data": {
-            "mimeType": "image/png",
-            "fileType": "image",
-            "fileExtension": "png",
-            "data": "filesystem-v2",
-            "fileName": "2026-05-25 10_19_03-2020.10.22 Fully Executed OTP - 861-865 Esquimalt Road.pdf — Mozilla Firefox.png",
-            "id": "filesystem-v2:workflows/1tp5ERA85rjAAQ18/executions/401/binary_data/ec885c34-0912-4e42-b957-b468c7ffe3d7",
-            "fileSize": "358 kB",
-            "bytes": 357900
-          }
-        },
-        "pairedItem": {
-          "item": 1,
-          "input": 1
-        }
-      },
-      {
-        "json": {
-          "originalName": "2026-05-25 10_18_36-2020.10.22 Fully Executed OTP - 861-865 Esquimalt Road.pdf — Mozilla Firefox.png",
-          "contentType": "image/*"
-        },
-        "binary": {
-          "data": {
-            "mimeType": "image/png",
-            "fileType": "image",
-            "fileExtension": "png",
-            "data": "filesystem-v2",
-            "fileName": "2026-05-25 10_18_36-2020.10.22 Fully Executed OTP - 861-865 Esquimalt Road.pdf — Mozilla Firefox.png",
-            "id": "filesystem-v2:workflows/1tp5ERA85rjAAQ18/executions/401/binary_data/ab1fa2d3-cb28-47dc-a4a3-bc20d1a3c014",
-            "fileSize": "195 kB",
-            "bytes": 195374
-          }
-        },
-        "pairedItem": {
-          "item": 2,
-          "input": 1
-        }
       }
     ]
   },
-  "versionId": "22e2d39b-5046-4dbb-a8dd-41b1605d1e75",
+  "versionId": "7034579f-4f84-4bf8-aeff-331aca27fbd3",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
