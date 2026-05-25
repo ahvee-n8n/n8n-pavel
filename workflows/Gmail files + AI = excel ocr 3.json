@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-25T07:24:38.037Z",
+  "updatedAt": "2026-05-25T09:59:40.929Z",
   "createdAt": "2026-05-25T05:22:33.044Z",
   "id": "1tp5ERA85rjAAQ18",
   "name": "Gmail files + AI = excel ocr 3",
@@ -82,7 +82,7 @@
     },
     {
       "parameters": {
-        "numberInputs": 4
+        "numberInputs": 5
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
@@ -296,7 +296,7 @@
       "typeVersion": 3,
       "position": [
         1120,
-        4176
+        4160
       ],
       "id": "6440a9e8-9fe1-4c6a-b5d7-666a40e959e1",
       "name": "Download file1",
@@ -326,7 +326,7 @@
       "typeVersion": 2,
       "position": [
         896,
-        4176
+        4160
       ],
       "id": "ccf24297-204c-46b5-9d94-935c47d607a1",
       "name": "Code in JavaScript2"
@@ -421,13 +421,13 @@
     },
     {
       "parameters": {
-        "jsCode": "const inputData = $input.first().json.output;\nlet data = inputData;\n\nlet count = 0;\nlet foundItems = [];\n\nfor (let key in data) {\n  const value = data[key];\n  \n  if (Array.isArray(value)) {\n    if (value.length > 0) {\n      count += value.length;\n      foundItems.push({\n        key: key,\n        value: value,\n        type: 'array',\n        itemCount: value.length\n      });\n    }\n  } else if (value !== '' && value !== null && value !== undefined && value !== 0) {\n    count++;\n    foundItems.push({\n      key: key,\n      value: value,\n      type: typeof value\n    });\n  }\n}\n\n// Beautiful HTML table\nlet htmlOutput = `\n<div style=\"font-family: Arial, sans-serif;\">\n  <h3 style=\"color: #2c3e50;\">📊 Finded Fields Report</h3>\n  <p style=\"color: #7f8c8d;\">Total found: <strong style=\"color: #e74c3c;\">${count}</strong>  values</p>\n  <table style=\"width: 100%; border-collapse: collapse; margin-top: 15px;\">\n    <thead>\n      <tr style=\"background-color: #34495e; color: white;\">\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Field</th>\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Value</th>\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Type</th>\n      </tr>\n    </thead>\n    <tbody>\n`;\n\nfoundItems.forEach((item, index) => {\n  let valueDisplay = item.value;\n  let typeDisplay = item.type;\n  let rowColor = index % 2 === 0 ? '#f8f9fa' : '#ffffff';\n  \n  if (item.type === 'array') {\n    valueDisplay = item.value.join(', ');\n    typeDisplay = `<span style=\"color: #e67e22;\">array (${item.itemCount} items)</span>`;\n  } else if (item.type === 'string') {\n    typeDisplay = `<span style=\"color: #27ae60;\">string</span>`;\n  } else if (item.type === 'number') {\n    typeDisplay = `<span style=\"color: #2980b9;\">number</span>`;\n  }\n  \n  htmlOutput += `\n    <tr style=\"background-color: ${rowColor};\">\n      <td style=\"padding: 10px; border: 1px solid #ddd;\"><strong>${item.key}</strong></td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">${valueDisplay}</td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">${typeDisplay}</td>\n    </tr>\n  `;\n});\n\nhtmlOutput += `\n    </tbody>\n  </table>\n  ${JSON.stringify(data, null, 2)}\n</div>\n`;\n\nreturn [{ \n  json: {\n    totalCount: count,\n    foundItems: foundItems,\n    htmlOutput: htmlOutput\n  }\n}];"
+        "jsCode": "const inputData = $input.first().json.output;\nlet data = inputData;\n\nlet count = 0;\nlet foundItems = [];\n\nfor (let key in data) {\n  const value = data[key];\n  \n  if (Array.isArray(value)) {\n    if (value.length > 0) {\n      count += value.length;\n      foundItems.push({\n        key: key,\n        value: value,\n        type: 'array',\n        itemCount: value.length\n      });\n    }\n  } else if (value !== '' && value !== null && value !== undefined && value !== 0) {\n    count++;\n    foundItems.push({\n      key: key,\n      value: value,\n      type: typeof value\n    });\n  }\n}\n\n// Beautiful HTML table\nlet htmlOutput = `\n<div style=\"font-family: Arial, sans-serif;\">\n  <h3 style=\"color: #2c3e50;\">📊 Finded Fields Report</h3>\n  <p style=\"color: #7f8c8d;\">Total found: <strong style=\"color: #e74c3c;\">${count}</strong>  values</p>\n  <table style=\"width: 100%; border-collapse: collapse; margin-top: 15px;\">\n    <thead>\n      <tr style=\"background-color: #34495e; color: white;\">\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Field</th>\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Value</th>\n        <th style=\"padding: 12px; text-align: left; border: 1px solid #ddd;\">Type</th>\n      </tr>\n    </thead>\n    <tbody>\n`;\n\nfoundItems.forEach((item, index) => {\n  let valueDisplay = item.value;\n  let typeDisplay = item.type;\n  let rowColor = index % 2 === 0 ? '#f8f9fa' : '#ffffff';\n  \n  if (item.type === 'array') {\n    valueDisplay = item.value.join(', ');\n    typeDisplay = `<span style=\"color: #e67e22;\">array (${item.itemCount} items)</span>`;\n  } else if (item.type === 'string') {\n    typeDisplay = `<span style=\"color: #27ae60;\">string</span>`;\n  } else if (item.type === 'number') {\n    typeDisplay = `<span style=\"color: #2980b9;\">number</span>`;\n  }\n  \n  htmlOutput += `\n    <tr style=\"background-color: ${rowColor};\">\n      <td style=\"padding: 10px; border: 1px solid #ddd;\"><strong>${item.key}</strong></td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">${valueDisplay}</td>\n      <td style=\"padding: 10px; border: 1px solid #ddd;\">${typeDisplay}</td>\n    </tr>\n  `;\n});\n\nhtmlOutput += `\n    </tbody>\n  </table>\n  ${JSON.stringify(data, null, 2)}\n</div>\n`;\n\nreturn [{ \n  json: {\n    totalCount: count,\n    foundItems: foundItems,\n    spreadsheet: \"https://docs.google.com/spreadsheets/d/\"+spreadSheet_Id+\"/edit\",\n    htmlOutput: htmlOutput\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7568,
-        4320
+        6352,
+        4352
       ],
       "id": "5cb28a16-2929-45a1-ac14-1cd8db354847",
       "name": "total"
@@ -445,8 +445,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        5280,
-        4512
+        4640,
+        4784
       ],
       "id": "045b22fd-0af5-48aa-ab97-a406db7bc620",
       "name": "OpenAI Chat Model4",
@@ -466,107 +466,48 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        6800,
-        4400
+        5808,
+        4432
       ],
       "id": "5ab5a65b-298d-40c3-aeee-7b26d20c8ac1",
       "name": "Merge11"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "bbc587e6-523b-4c3e-82e5-d0bf1f28f702",
-              "leftValue": "={{ $json.totalChunks  }}",
-              "rightValue": 1,
-              "operator": {
-                "type": "number",
-                "operation": "gt"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        4512,
-        4320
-      ],
-      "id": "1981f6e1-11f9-4c9c-ae32-fad300b4f4f8",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "jsCode": "// n8n Code Node: Combine All Documents\nconst dataArray = $(\"Merge3\").all();\n\nconst SEPARATOR = '\\n\\n--- DOCUMENT SEPARATOR ---\\n\\n';\nconst MAX_CHUNK_SIZE = $(\"AI Constants\").first().json.MAX_CHUNK_SIZE;\n\nlet combinedText = '';\nlet totalLength = 0;\n\n// Собираем все непустые тексты в массив\nconst validTexts = [];\n\ndataArray.forEach((item, index) => {\n  const text = item.json?.data || item.data || '';\n  if (text.trim().length > 0) {\n    validTexts.push(text.trim());\n    totalLength += text.length;\n    console.log(`Item ${index + 1}: ${text.length} chars`);\n  }\n});\n\n// Объединяем с разделителем только между элементами\ncombinedText = validTexts.join(SEPARATOR);\n\nconst estimatedChunks = Math.ceil(totalLength / MAX_CHUNK_SIZE);\n\nconsole.log('Total combined content length:', totalLength);\nconsole.log('Number of documents:', validTexts.length);\nconsole.log('Estimated total chunks:', estimatedChunks);\n\nreturn [{\n  json: {\n    combinedContent: combinedText,\n    totalDocuments: validTexts.length,\n    totalLength: totalLength,\n    maxChunkSize: MAX_CHUNK_SIZE,\n    totalChunks: estimatedChunks\n  }\n}];"
+        "jsCode": "// n8n Code Node: Combine All Documents\nconst dataArray = $(\"Merge3\").all();\n\nconst SEPARATOR = '\\n\\n--- DOCUMENT SEPARATOR ---\\n\\n';\nconst MAX_CHUNK_SIZE = $(\"AI Constants\").first().json.MAX_CHUNK_SIZE;\n\nlet combinedText = '';\nlet totalLength = 0;\n\n// Собираем все непустые тексты в массив\nconst validTexts = [];\n\ndataArray.forEach((item, index) => {\n  const text = item.json?.data || item.data || '';\n  if (text.trim().length > 0) {\n    validTexts.push(text.trim());\n    totalLength += text.length;\n  }\n});\n\n// Объединяем с разделителем только между элементами\ncombinedText = validTexts.join(SEPARATOR);\n\nconst estimatedChunks = Math.ceil(totalLength / MAX_CHUNK_SIZE);\n\nreturn [{\n  json: {\n    combinedContent: combinedText,\n    totalDocuments: validTexts.length,\n    totalLength: totalLength,\n    maxChunkSize: MAX_CHUNK_SIZE,\n    totalChunks: estimatedChunks\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4288,
-        4320
+        4128,
+        4336
       ],
       "id": "e2dfddcd-a1fc-48d8-b780-8be266b334aa",
       "name": "Split Data into Chunks2"
     },
     {
       "parameters": {
-        "jsCode": "// n8n Code Node: Chunk Splitter (fixed)\nconst input = $input.item.json;\nconst allContent = input.combinedContent || '';\nconst SEPARATOR = '--- DOCUMENT SEPARATOR ---';\nconst MAX_CHUNK_SIZE = input.maxChunkSize || 250000;\n\nlet chunks = [];\nlet startIndex = 0;\nlet chunkIndex = 0;\n\nfunction addChunkToArray(chunkText, index) {\n  const trimmed = chunkText.trim();\n  if (trimmed.length === 0) return;\n  chunks.push({\n    json: {\n      chunkIndex: index + 1,\n      // totalChunks буде встановлено після розбиття\n      chunkContent: trimmed,\n      estimatedTokens: Math.ceil(trimmed.length / 4)\n    }\n  });\n}\n\nwhile (startIndex < allContent.length) {\n  let endIndex = Math.min(startIndex + MAX_CHUNK_SIZE, allContent.length);\n\n  // Якщо є розділювачі — розумне відсікання по SEPARATOR\n  if (endIndex < allContent.length) {\n    const separatorIndex = allContent.lastIndexOf(SEPARATOR, endIndex);\n    // якщо знайшли розділювач в межах поточного блоку (після startIndex)\n    if (separatorIndex > startIndex) {\n      endIndex = separatorIndex + SEPARATOR.length;\n    }\n  }\n\n  const chunkText = allContent.slice(startIndex, endIndex);\n  addChunkToArray(chunkText, chunkIndex);\n\n  startIndex = endIndex;\n  chunkIndex++;\n}\n\n// Тепер, коли всі chunks зібрані, встановлюємо totalChunks у кожен елемент\nconst totalChunks = chunks.length;\nconst result = chunks.map(item => {\n  return {\n    json: {\n      ...item.json,\n      totalChunks\n    }\n  };\n});\n\nconsole.log(`✅ Created ${result.length} chunks from ${input.totalDocuments || 'unknown'} documents`);\nconsole.log('Total chars:', allContent.length);\nconsole.log(`🎯 Estimated total tokens: ${Math.ceil(allContent.length / 4).toLocaleString()}`);\n\nreturn result;\n"
+        "jsCode": "// n8n Code Node: Chunk Splitter (fixed)\nconst input = $input.item.json;\nconst allContent = input.combinedContent || '';\nconst SEPARATOR = '--- DOCUMENT SEPARATOR ---';\nconst MAX_CHUNK_SIZE = $(\"AI Constants\").first().json.MAX_CHUNK_SIZE;\n\nlet chunks = [];\nlet startIndex = 0;\nlet chunkIndex = 0;\n\nfunction addChunkToArray(chunkText, index) {\n  const trimmed = chunkText.trim();\n  if (trimmed.length === 0) return;\n  chunks.push({\n    json: {\n      chunkIndex: index + 1,\n      // totalChunks буде встановлено після розбиття\n      chunkContent: trimmed,\n      estimatedTokens: Math.ceil(trimmed.length / 4)\n    }\n  });\n}\n\nwhile (startIndex < allContent.length) {\n  let endIndex = Math.min(startIndex + MAX_CHUNK_SIZE, allContent.length);\n\n  // Якщо є розділювачі — розумне відсікання по SEPARATOR\n  if (endIndex < allContent.length) {\n    const separatorIndex = allContent.lastIndexOf(SEPARATOR, endIndex);\n    // якщо знайшли розділювач в межах поточного блоку (після startIndex)\n    if (separatorIndex > startIndex) {\n      endIndex = separatorIndex + SEPARATOR.length;\n    }\n  }\n\n  const chunkText = allContent.slice(startIndex, endIndex);\n  addChunkToArray(chunkText, chunkIndex);\n\n  startIndex = endIndex;\n  chunkIndex++;\n}\n\n// Тепер, коли всі chunks зібрані, встановлюємо totalChunks у кожен елемент\nconst totalChunks = chunks.length;\nconst result = chunks.map(item => {\n  return {\n    json: {\n      ...item.json,\n      totalChunks\n    }\n  };\n});\n\n\nreturn result;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4688,
-        4144
+        4336,
+        4336
       ],
       "id": "1a1e0e9b-3831-4f9f-846f-a9996a22b974",
       "name": "Prepare Chunk for Processing5"
-    },
-    {
-      "parameters": {
-        "jsCode": "// n8n Code Node: Single Chunk Extractor\n\nconst inputData = $input.first().json;\n\n// Якщо дані приходять із попереднього вузла\nconst chunks = inputData.chunks || [];\nconst chunkIndex = inputData.currentItemIndex || 0;\nconst totalChunks = inputData.totalChunks || inputData.totalItems || 1;\n\nlet chunkContent = '';\n\ntry {\n  if (chunks.length > 0 && chunks[chunkIndex]) {\n    const currentChunk = chunks[chunkIndex];\n\n    // Варіант 1: структура [{ content: \"...\"}]\n    if (Array.isArray(currentChunk) && currentChunk.length > 0) {\n      const firstItem = currentChunk[0];\n      chunkContent = firstItem?.content || firstItem?.json?.content || '';\n    }\n    // Варіант 2: структура без вкладення\n    else if (currentChunk.content) {\n      chunkContent = currentChunk.content;\n    }\n  } else if (inputData.combinedContent) {\n    // Якщо немає chunks, але є combinedContent (один великий документ)\n    chunkContent = inputData.combinedContent;\n  }\n} catch (error) {\n  console.error('Error processing chunk:', error);\n  chunkContent = '⚠️ Error processing chunk content';\n}\n\nconsole.log(`📄 Single chunk content length: ${chunkContent.length} chars`);\n\nreturn {\n  chunkContent,\n  chunkIndex: chunkIndex + 1,\n  totalChunks,\n  processingType: \"final\"\n};\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        4800,
-        4624
-      ],
-      "id": "5b196e5d-b951-4923-8ad5-7cf83de14e73",
-      "name": "Prepare Chunk for Processing6"
     },
     {
       "parameters": {},
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        7248,
-        4320
+        6128,
+        4352
       ],
       "id": "b80ff142-87f9-4c0a-9936-60c9ffc77e7a",
       "name": "Merge12"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Функція перевірки, чи це \"обгорнутий\" JSON\nfunction needsParsing(obj) {\n    return obj && obj.action === \"parse\" && typeof obj.text === \"string\";\n}\n\n// Функція для парсингу тексту з Markdown\nfunction parseTextWithMarkdown(text) {\n    text = text.replace(/```json\\s*|```/g, \"\").trim();\n    try {\n        let parsed = JSON.parse(text);\n        return parsed.output;\n    } catch (err) {\n        throw new Error(\"Неможливо розпізнати JSON після очищення Markdown\");\n    }\n}\n\n// Обробляємо всі items\nreturn $input.all().map(item => {\n    const output = item.json;\n    \n    if (needsParsing(output)) {\n        return parseTextWithMarkdown(output.text);\n    }\n    \n    // Якщо формат вже правильний\n    return output;\n});"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        5744,
-        4672
-      ],
-      "id": "19d87589-91bb-4ff5-91ef-113ac856076f",
-      "name": "Code in JavaScript10"
     },
     {
       "parameters": {
@@ -575,8 +516,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5728,
-        4144
+        4944,
+        4336
       ],
       "id": "bed4f21b-660f-44a2-aa62-c1d807db1fa1",
       "name": "Code in JavaScript11"
@@ -594,8 +535,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        5216,
-        4064
+        4576,
+        4336
       ],
       "id": "fe5ba991-1a11-4d64-8430-763f2660076f",
       "name": "Create final summary8",
@@ -627,8 +568,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        7072,
-        4544
+        5952,
+        4560
       ],
       "id": "ac1585fe-2bcb-4199-93a3-6ebea455d1b2",
       "name": "HTTP Request2",
@@ -656,8 +597,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        6576,
-        4464
+        5600,
+        4480
       ],
       "id": "487effaa-9b56-41f8-8cd5-d41488a83506",
       "name": "Copy file2",
@@ -671,16 +612,16 @@
     },
     {
       "parameters": {
-        "sendTo": "veronika.lamore@gmail.com",
+        "sendTo": "axbu3ra@gmail.com",
         "subject": "✅ Workflow Success",
-        "message": "={{ $json.htmlOutput }}\n{{ $json.json }}",
+        "message": "=<p><a href=\"https://docs.google.com/spreadsheets/d/{{ $('Merge12').first().json.spreadsheetId }}/edit\">table link</a></p>\n{{ $json.htmlOutput }}\n",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        7888,
-        4320
+        6576,
+        4352
       ],
       "id": "9ed0fb3b-de4b-4ec6-a4bb-ec7e67f4a98c",
       "name": "Send a message3",
@@ -699,8 +640,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6352,
-        4320
+        5424,
+        4336
       ],
       "id": "6c3de139-7f5e-4fc4-992c-fdfce37832ee",
       "name": "Code2",
@@ -720,8 +661,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        4896,
-        4272
+        4480,
+        3872
       ],
       "id": "1a65432c-d7ff-42a3-bde1-42575c2a175e",
       "name": "Anthropic Chat Model"
@@ -734,8 +675,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
       "typeVersion": 1,
       "position": [
-        4912,
-        4416
+        4496,
+        4016
       ],
       "id": "5be3b2f5-45c0-49fe-a86c-3b8ee860bc7d",
       "name": "DeepSeek Chat Model"
@@ -748,8 +689,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        5008,
-        4336
+        4592,
+        3936
       ],
       "id": "9136a1e1-0524-4665-b3e5-c99ba688013d",
       "name": "Google Gemini Chat Model"
@@ -762,8 +703,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        5344,
-        4288
+        4704,
+        4560
       ],
       "id": "2a8af82d-c746-4d90-ade9-5fc611168a92",
       "name": "Structured Output Parser"
@@ -775,8 +716,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6064,
-        4192
+        5200,
+        4336
       ],
       "id": "678b33ac-96b9-4d0d-af6c-2c6df2e85d10",
       "name": "Злиття даних з чанків"
@@ -789,8 +730,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        5712,
-        4320
+        4928,
+        3856
       ],
       "id": "05020b0a-8794-4b27-86e0-f3e1c6c49f2f",
       "name": "Google Gemini Chat Model1"
@@ -803,8 +744,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
       "typeVersion": 1,
       "position": [
-        5504,
-        4496
+        4720,
+        4032
       ],
       "id": "d44ee8bf-54b6-4586-95e5-7392994e87fb",
       "name": "DeepSeek Chat Model1"
@@ -822,8 +763,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        5648,
-        4464
+        4864,
+        4000
       ],
       "id": "462b506d-e115-4b2a-9b81-0ef86d0b8333",
       "name": "Anthropic Chat Model1"
@@ -841,98 +782,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        5216,
-        4272
+        4576,
+        4544
       ],
       "id": "8616c226-8dfd-4ad5-af76-0254182f2054",
       "name": "OpenAI Chat Model5",
-      "credentials": {
-        "openAiApi": {
-          "id": "6WxABrGkJMVqyaUq",
-          "name": "OpenAI account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1",
-          "mode": "list",
-          "cachedResultName": "gpt-4.1"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        5152,
-        5216
-      ],
-      "id": "bc252db4-1b26-433c-b202-5c13494dadbc",
-      "name": "OpenAI Chat Model6",
-      "credentials": {
-        "openAiApi": {
-          "id": "6WxABrGkJMVqyaUq",
-          "name": "OpenAI account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=You are processing document(s).\n{{ $json.totalChunks > 1 ? \"This is chunk \" + $json.chunkIndex + \" of \" + $json.totalChunks + \".\" : \"This is the complete document set.\" }}\n\n**EXTRACTION RULES:**\n- Process ALL documents in this input (separated by \"--- DOCUMENT SEPARATOR ---\")\n- Extract data from every available document\n- Merge information when multiple documents contain related data\n- Leave fields empty only if information is completely missing\n- Use the most specific and complete data available\n- Do not include any of the .1 or .3 suffixes in the JSON keys — use only the main field number (e.g., \"1\", not \"1.1\").\n\n**FIELD FORMAT EXPLANATION:**\nEach field has this structure:\n- Number: Field identifier (1–160)\n- Field Type: text / list / number / number-$ / number-percentage / date / array of ...\n- Template Values: For list fields only (e.g., \"Hard/Soft\")\n- Description: What to extract\n\n**DATA TYPE FORMATTING RULES:**\n- **text:** Plain string value. Leave empty \"\" if not found.\n- **number:**   \n  ➤ Do *not* round values — always keep exact decimal precision as in the source.  \n  ➤ Use 0 if not found.\n- **number-$:** Monetary value starting with \"$\", e.g. `$50 200 000`.  \n  ➤ Use space for thousands separation (every three digits).  \n  ➤ No commas, dots, or other separators besides spaces and the dollar sign.  \n  ➤ Leave empty \"\" if not found.\n- **number-percentage:** Value followed by \"%\", e.g. `5,5%`.  \n  ➤ Use comma for decimals, no rounding under any circumstances.  \n  ➤ Leave empty \"\" if not found.\n- **list:** Must match exactly one of the predefined template options. Leave empty \"\" if not found.\n- **date:** Format as `\"Month DD, YYYY\"`. Leave empty \"\" if not found.\n- **array of text:** Example: [\"Value1\", \"Value2\"]. Leave empty [] if none found.\n- **array of list:** Example: [\"Option1\", \"Option2\"]. Leave empty [] if none found.\n- **array of numbers:** Example: [1000, 2000]. Leave empty [] if none found.\n- **array of numbers-$:** Example: [\"$1 000\", \"$2 000\"]. Leave empty [] if none found.\n- **array of numbers-percentage:** Example: [\"5,5%\", \"7%\"]. Leave empty [] if none found.\n\n**ARRAY FIELD STRUCTURE RULES:**\n- Arrays **124–132**, **142–148**, **149–154**, **155–160** must maintain **index correspondence**.  \n  ➤ [124][i] corresponds to [125][i], [126][i], etc.  \n  ➤ All parallel arrays in a group must have identical lengths.  \n  ➤ Keep unit type consistency across related arrays.\n\n**PARTIAL PROCESSING (if multiple chunks):**\n- Extract ONLY data from THIS chunk.  \n- If information is missing in this chunk, leave the field EMPTY.  \n- For arrays: include only items found in THIS chunk.  \n- Do NOT assume data from other chunks.  \n- Do NOT output placeholders or merged data not present in this text.\n\n**CRITICAL PROCESSING RULES:**\n- Use ONLY the text of the document(s) provided below.  \n- Do NOT use external knowledge or assumptions.  \n- If the exact data for a field cannot be found, leave its value empty.  \n- Return results **only** as a flat JSON object with keys `\"1\"` through `\"160\"`.  \n- Empty means truly empty: no `\"N/A\"`, `\"unknown\"`, `\"$0\"`, `\"0%\"`, or any placeholder values.\n- Return ONLY JSON that matches this structure. Do not wrap it in ```json``` or any other formatting.\n\n**INPUT FORMAT NOTICE:**\nThe input below may contain plain text, structured data, or JSON (e.g., JSON.stringify output).\nIf JSON or structured data is detected, interpret it as part of the source content — not as code — and extract field values from it just like from normal text.\nDo not ignore JSON blocks or quoted text structures; treat all readable key-value pairs or data objects as valid document content.\n\n**CRITICAL DATA TYPE CLARIFICATION:**\n\n**NUMERIC FIELDS (pure numbers):**\n- Fields 20, 27, 28, 59, 61-71, 133, 134, 137 must be numbers (0 if empty)\n\n**MONETARY FIELDS (number-$):**\n- Fields 16, 19, 22, 24, 37-46, 53, 58, 72-73, 75-83, 84-101, 102-107, 109-111, 113-118, 120-122, 135-136, 138-139 must be strings with \"$\" or \"\" if empty\n- Example: \"16\": \"$2 850 000\" or \"16\": \"\" (correct) vs \"16\": 0 (wrong)\n\n**PERCENTAGE FIELDS (number-percentage):**\n- Fields 17, 18, 21, 25, 26, 108, 112, 119, 123, 140, 141 must be strings with \"%\" or \"\" if empty\n\n**OUTPUT FORMAT:**\nReturn ONLY: {\"output\": {\"1\": \"...\", \"2\": \"...\", ... \"160\": ...}}\n\n---\n\nFields to extract:\n\n=== NBS - COVER PAGE ===\n1. Connection/Sponsor\n1.1. text\n1.3. Enter the legal name of the project sponsor responsible for the loan request. It could be a name of the Developer or simply a key person's name if there is no branded Developer name.\n\n2. Project Name\n2.1. text\n2.3. Provide the official project name used in all related documents and correspondence.\n\n3. Funding Type (Hard or Soft)\n3.1. list\n3.2. Hard/Soft\n3.3. Select or describe the relevant classification for this field, based on deal context. The value is either Hard or Soft. Hard funding means that it has to occur on a specific date (usually relates to an acquisition transaction or to a firm refinancing date. Soft funding is not tied to a specific date.\n\n4. Broker Name\n4.1. text\n4.3. Enter the name of the mortgage broker or intermediary arranging the deal.\n\n5. Brokerage Name\n5.1. text\n5.3. Enter the name of the mortgage broker or intermediary arranging the deal.\n\n6. Loan Type\n6.1. list\n6.2. Income/Construction/Reno-Conversion/Land/Inventory\n6.3. Specify the requested loan type or structure, such as Income, Construction, Reno/Conversion, Land, or Inventory.\n\n7. Project Type\n7.1. list\n7.2. Mixed-Use/Residential/Industrial/Retail/Office/Land\n7.3. Specify the proposed project type, such as Mixed Use, Residential, Industrial, Retail, Office, or Land. Mixed-Use means there are more than one asset class in the project.\n\n8. Asset Class\n8.1. list\n8.2. Residential/Industrial/Retail/Office/Land\n8.3. Specify the main asset class for the project based on deal context, such as Residential, Industrial, Retail, Office, or Land.\n\n9. Asset Type\n9.1. list\n9.2. For Rent/For Sale\n9.3. Select or describe the relevant classification for the main asset class such as For Rent or For Sale.\n\n10. Sub-Asset Class\n10.1. list\n10.2. Residential/Industrial/Retail/Office/Land/N-A\n10.3. Specify the sub-asset class for the project based on deal context, such as Residential, Industrial, Retail, Office, Land, or N/A if there is only main asset class.\n\n11. Sub-Asset Type\n11.1. list\n11.2. For Rent/For Sale/N-A\n11.3. Select or describe the relevant classification for the sub-asset class such as For Rent, For Sale, or N/A if there is only main asset class.\n\n=== COLLATERAL DETAILS ===\n12. Property Address\n12.1. text\n12.3. Input the street address of the property.\n\n13. Municipality\n13.1. text\n13.3. Input the municipal address of the property.\n\n14. Metropolitan Area\n14.1. text\n14.3. Input the Metropolitan Area in which the property municipality is located. For example, Greater Vancouver Area which includes Burnaby municipality.\n\n15. Province / State\n15.1. text\n15.3. Input the province address of the property. Short the province name to two capital letters such as BC or ON.\n\n=== LENDING PARAMETERS ===\n16. Loan Amount (Borrower)\n16.1. number-$\n16.3. Enter the loan amount that is requested.\n\n17. LTC (Borrower)\n17.1. number-percentage\n17.3. Enter value for the Loan to Coast ratio based on the requested parameters such as Loan Amount and Total Budget.\n\n18. LTV (Borrower)\n18.1. number-percentage\n18.3. Enter value for the Loan to Value ratio based on the requested parameters such as Loan Amount and Total Value.\n\n19. LoC (Required)\n19.1. number-$\n19.3. Enter value for the Letter of Credit requested if applicable.\n\n20. Term (excl. b.u.)\n20.1. number\n20.3. Input the loan term requested expressed in months.\n\n21. Interest Rate (%) Stage 1\n21.1. number-percentage\n21.3. Specify Loan Interest Rate that the Borrower or the requesting broker are hoping to achieve. If not specified, state so.\n\n22. Existing 1st Balance\n22.1. number-$\n22.3. Provide balance for the existing loan if applicable.\n\n23. Existing 1st Lender\n23.1. text\n23.3. Provide the name of the existing lender if applicable.\n\n24. Interest Budget (Borrower)\n24.1. number-$\n24.3. Enter the amount of Interest Cost budgeted in the Borrower's proforma.\n\n25. Commitment Fee\n25.1. number-percentage\n25.3. Enter value of commitment fee/financing fee expressed as percentage of the loan amount.\n\n26. Broker Fee\n26.1. number-percentage\n26.3. Enter value of broker fee expressed as percentage of the loan amount.\n\n27. Extension Options\n27.1. number\n27.3. Provide number of extensions that is requested if applicable.\n\n28. Months per\n28.1. number\n28.3. Provide number of months for each extension that is requested if applicable.\n\n=== SPONSOR/GUARANTORS/ADDITIONAL COLLATERAL ===\n== BORROWER ==\n29. Borrower Name 1\n29.1. text\n29.3. Enter the legal name of the borrowing entity # 1 responsible for the loan request.\n\n30. Borrower Name 2\n30.1. text\n30.3. Enter the legal name of the borrowing entity # 2 responsible for the loan request , if there are more than one of them.\n\n31. Borrower Name 3\n31.1. text\n31.3. Enter the legal name of the borrowing entity # 3 responsible for the loan request , if there are more than two of them.\n\n== GUARANTORS ==\n32. Guarantor Name 1\n32.1. text\n32.3. Enter the 1st legal name of the entity or a person (Guarantor 1) that will guarantee the loan.\n\n33. Guarantor Name 2\n33.1. text\n33.3. Enter the 2nd legal name of the entity or a person (Guarantor 2) that will guarantee the loan if applicable.\n\n34. Guarantor Name 3\n34.1. text\n34.3. Enter the 3rd legal name of the entity or a person (Guarantor 3) that will guarantee the loan if applicable.\n\n35. Guarantor Name 4\n35.1. text\n35.3. Enter the 4th legal name of the entity or a person (Guarantor 4) that will guarantee the loan if applicable.\n\n36. Guarantor Name 5\n36.1. text\n36.3. Enter the 5th legal name of the entity or a person (Guarantor 5) that will guarantee the loan if applicable.\n\n37. Reported PNW for Guarantor 1\n37.1. number-$\n37.3. Provide stated Personal Net Worth value for Guarantor 1.\n\n38. Reported PNW for Guarantor 2\n38.1. number-$\n38.3. Provide stated Personal Net Worth value for Guarantor 2.\n\n39. Reported PNW for Guarantor 3\n39.1. number-$\n39.3. Provide stated Personal Net Worth value for Guarantor 3.\n\n40. Reported PNW for Guarantor 4\n40.1. number-$\n40.3. Provide stated Personal Net Worth value for Guarantor 4.\n\n41. Reported PNW for Guarantor 5\n41.1. number-$\n41.3. Provide stated Personal Net Worth value for Guarantor 5.\n\n42. Reported Liquidity for Guarantor 1\n42.1. number-$\n42.3. Provide stated Liquidity (like cash and liquid investments which are part of the Personal Net Worth) value for Guarantor 1.\n\n43. Reported Liquidity for Guarantor 2\n43.1. number-$\n43.3. Provide stated Liquidity (like cash and liquid investments which are part of the Personal Net Worth) value for Guarantor 2.\n\n44. Reported Liquidity for Guarantor 3\n44.1. number-$\n44.3. Provide stated Liquidity (like cash and liquid investments which are part of the Personal Net Worth) value for Guarantor 3.\n\n45. Reported Liquidity for Guarantor 4\n45.1. number-$\n45.3. Provide stated Liquidity (like cash and liquid investments which are part of the Personal Net Worth) value for Guarantor 4.\n\n46. Reported Liquidity for Guarantor 5\n46.1. number-$\n46.3. Provide stated Liquidity (like cash and liquid investments which are part of the Personal Net Worth) value for Guarantor 5.\n\n47. Google Searches Complete?\n47.1. list\n47.2. Yes/No\n47.3. Do an online research looking for negative news or mentioning associated with the Borrower or any of the Guarantors.\n\n48. Google Search Results\n48.1. text\n48.3. State results of an online research looking for negative news or mentioning associated with the Borrower or any of the Guarantors.\n\n== ADDITIONAL COLLATERAL 1 (if applicable) ==\n49. Charge Rank for Additional Collateral 1\n49.1. list\n49.2. 1st/2nd/3rd\n49.3. If the request includes a proposition for Additional Collateral (Additional Collateral 1) in addition to the subject property state which charge rank they will be able to provide like 1st or 2nd mortgage.\n\n50. Additional Collateral 1 Asset Class\n50.1. list\n50.2. Commercial/Residential/Other\n50.3. Specify the asset class, such as retail, industrial, or multifamily. Refer to the list of values.\n\n51. Additional Collateral 1 Asset Sub-class\n51.1. list\n51.2. C-Retail/C-Industrial/C-Office/R-Multi-Family/R-Single-Family/R-Multi-Family Lot/R-Single-Family Lot/O-Hotel/O-Parking/O-Storage/O-Retirement/O-Mobile Homes/O-Student Housing\n51.3. Specify the sub-asset class, such as retail, industrial, or multifamily. Refer to the list of values.\n\n52. Additional Collateral 1 Property Address\n52.1. text\n52.3. Input the full civic address of the property, including street, city, and postal code.\n\n53. Additional Collateral 1 Appraised Value\n53.1. number-$\n53.3. Provide the dollar value or price associated with this item, based on the latest appraisal or agreement.\n\n== ADDITIONAL COLLATERAL 2 (if applicable) ==\n54. Charge Rank for Additional Collateral 2\n54.1. list\n54.2. 1st/2nd/3rd\n54.3. If the request includes a proposition for Additional Collateral (Additional Collateral 2) in addition to the subject property state which charge rank they will be able to provide like 1st or 2nd mortgage.\n\n55. Additional Collateral 2 Asset Class\n55.1. list\n55.2. Commercial/Residential/Other\n55.3. Specify the asset class, such as retail, industrial, or multifamily. Refer to the list of values.\n\n56. Additional Collateral 2 Asset Sub-class\n56.1. list\n56.2. C-Retail/C-Industrial/C-Office/R-Multi-Family/R-Single-Family/R-Multi-Family Lot/R-Single-Family Lot/O-Hotel/O-Parking/O-Storage/O-Retirement/O-Mobile Homes/O-Student Housing\n56.3. Specify the sub-asset class, such as retail, industrial, or multifamily. Refer to the list of values.\n\n57. Additional Collateral 2 Property Address\n57.1. text\n57.3. Input the full civic address of the property, including street, city, and postal code.\n\n58. Additional Collateral 2 Appraised Value\n58.1. number-$\n58.3. Provide the dollar value or price associated with this item, based on the latest appraisal or agreement.\n\n=== PROPERTY PARAMETERS ===\n== Project As-Is ==\n59. Number of Land Lots\n59.1. number\n59.3. Enter how many individual land lots were assembled for the Subject Property if applicable.\n\n60. Zoning\n60.1. text\n60.3. Provide zoning information for the subject property.\n\n61. Site Area(sf gross)\n61.1. number\n61.3. Enter total gross area for the Subject Property expressed in Square Foots (SF).\n\n62. Frontage Feet\n62.1. number\n62.3. Enter amount of frontage SF for the Subject Property expressed in Square Foots (SF).\n\n== Project As-Complete ==\n63. Residential Units\n63.1. number\n63.3. Enter how many residential units the developed Subject Property will include.\n\n64. Commercial Units\n64.1. number\n64.3. Enter how many commercial units the developed Subject Property will include if applicable.\n\n65. Parking Spaces\n65.1. number\n65.3. Enter how many parking spots the developed Subject Property will include.\n\n66. Gross Residential Area (sf)\n66.1. number\n66.3. Enter the gross residential square footage, also called buildable square footage attributable to residential units.\n\n67. Gross Commercial Area (sf)\n67.1. number\n67.3. Enter the gross commercial square footage, also called buildable square footage attributable to commercial units.\n\n68. Total Gross Area (sf)\n68.1. number\n68.3. Enter the total gross square footage, also called buildable square footage for the entire project.\n\n69. Net Residential Area (sf)\n69.1. number\n69.3. Enter the net residential square footage, also called sellable or leasable square footage attributable to residential units.\n\n70. Net Commercial Area (sf)\n70.1. number\n70.3. Enter the net commercial square footage, also called sellable or leasable square footage attributable to commercial units.\n\n71. Total Net Area (sf)\n71.1. number\n71.3. Enter the total net square footage, also called sellable or leasable square footage for entire project.\n\n=== LAND PURCHASE PRICE ===\n72. Land Purchase Price\n72.1. number-$\n72.3. Provide the dollar value or price associated with the Subject Property land acquisition, in other words what was paid for the land.\n\n73. Closing Costs\n73.1. number-$\n73.3. Enter the cost associated with acquisition of the land like closing fees, property transfer tax, legal costs, etc.\n\n74. Land Acquisition Date\n74.1. date\n74.3. Enter the date when the Subject Property land was acquired (Month DD, YYYY).\n\n=== LAND VALUE As-Is ===\n75. Land Value As-Is (Borrower)\n75.1. number-$\n75.3. Provide the dollar value for the Subject Property land \"As-Is\" that is proposed in the financing request by the Borrower or the broker. It could be that the Borrower or the broker use the land value As-Is based on the appraisal.\n\n76. Land Value As-Is (Appraisal)\n76.1. number-$\n76.3. Provide the dollar value for the Subject Property land \"As-Is\" based on the corresponding appraisal.\n\n=== RESIDENTIAL VALUE As-Complete ===\n77. Residential Value As-Complete (Borrower)\n77.1. number-$\n77.3. Provide the dollar value for the Subject Property \"As-Complete\" for the Residential component (when the development is complete)\" that is proposed in the financing request by the Borrower or the broker. It could be that the Borrower or the broker use the Subject Property value As-Complete for the Residential component based on the appraisal.\n\n78. Residential Value As-Complete (Appraisal)\n78.1. number-$\n78.3. Provide the dollar value for the Subject Property \"As-Complete\" for the Residential component (when the development is complete) based on the corresponding appraisal.\n\n=== COMMERCIAL VALUE As-Complete ===\n79. Commercial Value As-Complete (Borrower)\n79.1. number-$\n79.3. Provide the dollar value for the Subject Property \"As-Complete\" for the Commercial component (when the development is complete)\" that is proposed in the financing request by the Borrower or the broker. It could be that the Borrower or the broker use the Subject Property value As-Complete for the Commercial component based on the appraisal.\n\n80. Commercial Value As-Complete (Appraisal)\n80.1. number-$\n80.3. Provide the dollar value for the Subject Property \"As-Complete\" for the Commercial component (when the development is complete) based on the corresponding appraisal.\n\n=== PROJECT BUDGET ===\n81. Project Cost-to-Date/WIP\n81.1. number-$\n81.3. Provide the dollar value for the Total Project Costs incurred to date and that exclude any land costs.\n\n=== PROJECT BUDGET DETAILS ===\n82. Historic Financing Costs\n82.1. number-$\n82.3. Provide the dollar value for financing costs associated with acquiring and carrying the Subject Property land.\n\n=== HARD COST ===\n83. Hard Costs\n83.1. number-$\n83.3. Provide the dollar value for the Hard Cost budget that is specified in the proposed budget or development budget or proforma. If there is no breakdown for other Hard Costs sub-categories, use this field for the total budgeted Hard Cost. Hard Costs are direct construction expenses such as materials, labor, equipment, and contractor fees required to physically build the project.\n\n84. Hard Cost Site Servicing\n84.1. number-$\n84.3. Provide the dollar value for the Hard Cost budget associated with Site Servicing work that is specified in the proposed budget or development budget or proforma.\n\n85. Hard Cost Construction Management Fee\n85.1. number-$\n85.3. Provide the dollar value for the Hard Cost budget associated with Construction Management Fee that is specified in the proposed budget or development budget or proforma.\n\n86. Other Hard Cost\n86.1. number-$\n86.3. Provide the dollar value for the Hard Cost budget associated with other Hard Costs that are not associated with Construction Work, Site Servicing work, or Construction Management Fee that is specified in the proposed budget or development budget or proforma.\n\n87. Hard Cost Contingency\n87.1. number-$\n87.3. Provide the dollar value for Hard Cost contingency budget and that is specified in the proposed budget or development budget or proforma. If in the proposed package there is no distinction between Hard Cost Contingency and Soft Cost Contingency, enter the total amount of the budget contingency.\n\n=== SOFT COST ===\n88. Soft Cost Consultants\n88.1. number-$\n88.3. Provide the dollar value for the Soft Cost budget associated with various 3rd party consultants that is specified in the proposed budget or development budget or proforma. If there is no breakdown for other Soft Costs sub-categories, use this field for the total budgeted Soft Cost. Soft Costs are indirect development expenses that support the project but are not part of physical construction, including design fees, permits, legal costs, financing fees, and professional services.\n\n89. Soft Cost Government Levies and Charges\n89.1. number-$\n89.3. Provide the dollar value for the Soft Cost budget associated with Government Levies and Development Charges and Fees that is specified in the proposed budget or development budget or proforma.\n\n90. Soft Cost Development Costs\n90.1. number-$\n90.3. Provide the dollar value for the Soft Cost budget associated with Development costs (like development management fee, property tax, insurance cost, etc.) that is specified in the proposed budget or development budget or proforma.\n\n91. Soft Cost Marketing Costs\n91.1. number-$\n91.3. Provide the dollar value for the Soft Cost budget associated with Marketing that is specified in the proposed budget or development budget or proforma.\n\n92. Soft Cost Contingency\n92.1. number-$\n92.3. Provide the dollar value for Soft Cost contingency budget and that is specified in the proposed budget or development budget or proforma. If in the proposed package there is no distinction between Hard Cost Contingency and Soft Cost Contingency, enter 0.\n\n93. Soft Cost Commissions\n93.1. number-$\n93.3. Provide the dollar value for the Soft Cost budget associated with Sale Commissions that is specified in the proposed budget or development budget or proforma.\n\n94. Other Soft Costs\n94.1. number-$\n94.3. Provide the dollar value for the Soft Cost budget associated with Other Soft Costs that were not included in other Soft Cost categories that is specified in the proposed budget or development budget or proforma.\n\n=== FINANCING COSTS ===\n95. Interest Costs\n95.1. number-$\n95.3. Provide the dollar value for the Interest Cost budget associated with the subject property development that is specified in the proposed budget or development budget or proforma. Exclude any Interest Cost that is associated with the land acquisition and carrying costs.\n\n96. Commitment Fee\n96.1. number-$\n96.3. Provide the dollar value for the Commitment Fee budget that is specified in the proposed budget or development budget or proforma. Commitment Fee is a fee charged by the lender to secure and hold the agreed loan amount for the borrower, typically payable at loan approval or closing.\n\n97. Broker Fee\n97.1. number-$\n97.3. Provide the dollar value for the Broker Fee budget that is specified in the proposed budget or development budget or proforma. Broker Fee is a Compensation paid to the mortgage broker or intermediary for arranging the financing or introducing the borrower to the lender.\n\n98. Legal & Misc. Financing Costs\n98.1. number-$\n98.3. Provide the dollar value for the Legal fees and Financing costs budget associated with loan closing and that is specified in the proposed budget or development budget or proforma.\n\n99. Letter of Credit Charges\n99.1. number-$\n99.3. Provide the dollar value for the Letter of Credit budget associated with the lender providing a Letter of Credit specified in the proposed budget or development budget or proforma. Letter of Credit is a financial instrument issued by a bank guaranteeing payment to a beneficiary on behalf of the borrower, typically used to secure obligations such as development cost overruns, municipal servicing, or lease commitments.\n\n100. Other Financing Costs\n100.1. number-$\n100.3. Provide the dollar value for the other financing costs budget that is specified in the proposed budget or development budget or proforma.\n\n101. Other Lender Financing Costs\n101.1. number-$\n101.3. Provide the dollar value for the financing costs budget associated with another lender involved in the deal (exclude any financing costs associated with the land acquisition and carrying costs) that is specified in the proposed budget or development budget or proforma.\n\n=== RESIDENTIAL FOR RENT ===\n== DIRECT CAPITALIZATION VALUATION ==\n== Borrower ==\n102. Residential Income (Borrower)\n102.1. number-$\n102.3. Provide the dollar value for the budgeted Residential Rental Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker.\n\n103. Parking Income (Borrower)\n103.1. number-$\n103.3. Provide the dollar value for the budgeted Parking Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker.\n\n104. Storage Income (Borrower)\n104.1. number-$\n104.3. Provide the dollar value for the budgeted Storage Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker.\n\n105. Other Income (Borrower)\n105.1. number-$\n105.3. Provide the dollar value for the budgeted other income sources per year (beside Residential Rental, Parking, and Storage incomes) for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker.\n\n106. Commercial Income (Borrower)\n106.1. number-$\n106.3. Provide the dollar value for the budgeted Commercial Rental Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker.\n\n107. Recovery Income (Borrower)\n107.1. number-$\n107.3. Provide the dollar value for the budgeted Commercial Recovery Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker. Recovery Income is income received from tenants to reimburse the landlord for operating expenses such as property taxes, insurance, and maintenance, typically outlined in lease agreements.\n\n108. Residential Vacancy Allowance, % (Borrower)\n108.1. number-percentage\n108.3. Provide budgeted or expected Residential Vacancy Allowance expressed as percentage points of the Potential Gross Residential Revenue for the Subject property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker. Residential Vacancy Allowance is an adjustment that accounts for expected income loss from unoccupied residential units, expressed as a percentage of potential gross rent to reflect typical market vacancy levels.\n\n109. Commercial Vacancy Allowance, $ (Borrower)\n109.1. number-$\n109.3. Provide budgeted or expected Commercial Vacancy Allowance expressed as dollar amount for the Subject property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker. Commercial Vacancy Allowance is an estimated deduction from potential rental income to account for expected downtime or unleased space in commercial properties, based on prevailing market vacancy rates.\n\n110. Operating Expenses (Borrower)\n110.1. number-$\n110.3. Provide the dollar value for the budgeted Operating Expenses per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker. Operating Expenses are the ongoing costs required to maintain and operate a property, including utilities, repairs, maintenance, property management, insurance, and property taxes.\n\n111. Structural Allowance (Borrower)\n111.1. number-$\n111.3. Provide the dollar value for the budgeted Structural Allowance per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker. Structural Allowance is a budget provision for anticipated structural repairs or capital improvements to the building’s foundation, frame, or other load-bearing elements to ensure long-term integrity.\n\n112. Capitalization Rate (Borrower)\n112.1. number-percentage\n112.3. Provide the Capitalization Rate for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the Borrower or the broker. Capitalization Rate is the rate used to estimate a property’s value based on its Net Operating Income (NOI), calculated as NOI divided by the property’s market value or purchase price.\n\n== Appraisal ==\n113. Residential Income (Appraisal)\n113.1. number-$\n113.3. Provide the dollar value for the budgeted Residential Rental Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal.\n\n114. Parking Income (Appraisal)\n114.1. number-$\n114.3. Provide the dollar value for the budgeted Parking Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal.\n\n115. Storage Income (Appraisal)\n115.1. number-$\n115.3. Provide the dollar value for the budgeted Storage Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal.\n\n116. Other Income (Appraisal)\n116.1. number-$\n116.3. Provide the dollar value for the budgeted other income sources per year (beside Residential Rental, Parking, and Storage incomes) for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal.\n\n117. Commercial Income (Appraisal)\n117.1. number-$\n117.3. Provide the dollar value for the budgeted Commercial Rental Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal.\n\n118. Recovery Income (Appraisal)\n118.1. number-$\n118.3. Provide the dollar value for the budgeted Commercial Recovery Income per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal. Recovery Income is income received from tenants to reimburse the landlord for operating expenses such as property taxes, insurance, and maintenance, typically outlined in lease agreements.\n\n119. Residential Vacancy Allowance, % (Appraisal)\n119.1. number-percentage\n119.3. Provide budgeted or expected Residential Vacancy Allowance expressed as percentage points of the Potential Gross Residential Revenue for the Subject property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal. Residential Vacancy Allowance is an adjustment that accounts for expected income loss from unoccupied residential units, expressed as a percentage of potential gross rent to reflect typical market vacancy levels.\n\n120. Commercial Vacancy Allowance, $ (Appraisal)\n120.1. number-$\n120.3. Provide budgeted or expected Commercial Vacancy Allowance expressed as dollar amount for the Subject property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal. Commercial Vacancy Allowance is an estimated deduction from potential rental income to account for expected downtime or unleased space in commercial properties, based on prevailing market vacancy rates.\n\n121. Operating Expenses (Appraisal)\n121.1. number-$\n121.3. Provide the dollar value for the budgeted Operating Expenses per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal. Operating Expenses are the ongoing costs required to maintain and operate a property, including utilities, repairs, maintenance, property management, insurance, and property taxes.\n\n122. Structural Allowance (Appraisal)\n122.1. number-$\n122.3. Provide the dollar value for the budgeted Structural Allowance per year for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal. Structural Allowance is a budget provision for anticipated structural repairs or capital improvements to the building’s foundation, frame, or other load-bearing elements to ensure long-term integrity.\n\n123. Capitalization Rate (Appraisal)\n123.1. number-percentage\n123.3. Provide the Capitalization Rate for the Subject Property when the property is complete and stabilized that is specified in the proposed budget or development budget or proforma provided by the appraisal. Capitalization Rate is the rate used to estimate a property’s value based on its Net Operating Income (NOI), calculated as NOI divided by the property’s market value or purchase price.\n\n== Residential Unit Mix ==\n== Residential Unit Type by Setup ==\n124. Residential Unit Type by Setup [i]\n124.1. array of text\n124.3. Describe the relevant classification for Residential Unit Type by Setup # [i]. Unit types usually are differentiated by number of bedrooms, whether there is a den, unit type such as an apartment, townhouse, or duplex. Or it could be something else. Refer to value examples. It could be several units with the same Residential Unit Type by Setup. If all different types were listed in previous fields, state N/A.\n\n== Residential Unit Type by # of Bedrooms ==\n125. Residential Unit Type by # of Bedrooms [i]\n125.1. array of list\n125.2. Studio/1BED/2BED/3BED/Townhouse/Other/N-A\n125.3. Describe Residential Unit Type by Setup # [i] previously identified by number of bedrooms. Select the value from the list of values. If this specific Residential Unit Type by Setup is identified as N/A, state N/A.\n\n== Average Unit SF ==\n126. Average Unit Area (SF) for Residential Unit Type by Setup [i]\n126.1. array of numbers\n126.3. Enter an average unit area expressed in SF for Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker or provided in the appraisal. Also, it could be calculated as Total Area (SF) for Residential Unit Type by Setup [i] divided by Number of Units for Residential Unit Type by Setup [i]. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n== # of Units ==\n127. Number of Units for Residential Unit Type by Setup [i]\n127.1. array of numbers\n127.3. Enter number of units associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker or provided in the appraisal. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n== Total Unit SF ==\n128. Total Area (SF) for Residential Unit Type by Setup [i]\n128.1. array of numbers\n128.3. Enter total area expressed in SF for units associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker or provided in the appraisal. Also, it could be calculated as Average Unit Area (SF) for Residential Unit Type by Setup [i] multiplied by Number of Units for Residential Unit Type by Setup [i]. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n== Borrower ==\n== Average Rent, psf ==\n129. Average Rent per SF for Residential Unit Type by Setup [i] (Borrower)\n129.1. array of numbers-$\n129.3. Enter average rent per SF associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n== Average Rent per Unit ==\n130. Average Rent per Unit for Residential Unit Type by Setup [i] (Borrower)\n130.1. array of numbers-$\n130.3. Enter average rent per Unit associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n== Appraisal ==\n== Average Rent, psf ==\n131. Average Rent per SF for Residential Unit Type by Setup [i] (Appraisal)\n131.1. array of numbers-$\n131.3. Enter average rent per SF associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the appraisal. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n== Average Rent per Unit ==\n132. Average Rent per Unit for Residential Unit Type by Setup [i] (Appraisal)\n132.1. array of numbers-$\n132.3. Enter average rent per Unit associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the appraisal. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n=== RESIDENTIAL FOR SALE ===\n== PRE-SALES/DPI/MARKET RISK ==\n== PRE-SALES ==\n133. Pre-sales In Place, units\n133.1. number\n133.3. Enter number of residential units that the borrower was able to pre-sell by the time the financing request was submitted (currently).\n\n134. Pre-sales In Place, SF\n134.1. number\n134.3. Enter the total area expressed in SF for residential units that the borrower was able to pre-sell by the time the financing request was submitted (currently).\n\n135. Pre-sales In Place Value\n135.1. number-$\n135.3. Enter the total value expressed in a dollar amount for residential units that the borrower was able to pre-sell by the time the financing request was submitted (currently).\n\n136. Total Pre-sales Suggested by Borrower, $\n136.1. number-$\n136.3. Enter the total value expressed in a dollar amount for residential units that the borrower is planning to pre-sell overall for this project (not the current pre-sales but the amount of pre-sales that will be achieved).\n\n137. Total Pre-sales Suggested by Borrower, Units\n137.1. number\n137.3. Enter number of residential units that the borrower is planning to pre-sell overall for this project (not the current pre-sales but the amount of pre-sales that will be achieved).\n\n138. Unsold Units Value (Borrower)\n138.1. number-$\n138.3. Enter the total value expressed in a dollar amount for residential units that are not pre-sold for the project overall suggested by the Borrower (based on the Borrower's forecasted prices).\n\n139. Unsold Units Value (Appraisal)\n139.1. number-$\n139.3. Enter the total value expressed in a dollar amount for residential units that are not pre-sold for the project overall suggested by the Appraisal (based on the Appraisal's forecasted prices).\n\n140. Required Min. Deposits\n140.1. number-percentage\n140.3. Enter the minimum deposits expressed as percentage of the total price that the Borrower is collecting from residential pre-sales.\n\n141. Closing Commiss.\n141.1. number-percentage\n141.3. Enter the closing commission expressed as percentage of the total price. The commission will be paid to the residential realtors.\n\n== UNIT MIX ==\n== Residential Unit Mix ==\n== Residential Unit Type by Setup ==\n142. Residential Unit for Sale Type by Setup [i]\n142.1. array of text\n142.3. Describe the relevant classification for Residential Unit for Sale Type by Setup # [i]. Unit types usually are differentiated by number of bedrooms, whether there is a den, unit type such as an apartment, townhouse, or duplex. Or it could be something else. Refer to value examples. It could be several units with the same Residential Unit for Sale Type by Setup. If all different types were listed in previous fields, state N/A.\n\n== Residential Unit Type by # of Bedrooms ==\n143. Residential Unit for Sale Type by # of Bedrooms [i]\n143.1. array of list\n143.2. Studio/1BED/2BED/3BED/Townhouse/Other/N-A\n143.3. Describe Residential Unit for Sale Type by Setup # [i] previously identified by number of bedrooms. Select the value from the list of values. If this specific Residential Unit for Sale Type by Setup is identified as N/A, state N/A.\n\n== Average Unit SF ==\n144. Average Unit Area (SF) for Residential Unit for Sale Type by Setup [i]\n144.1. array of numbers\n144.3. Enter an average unit area expressed in SF for Residential Unit for Sale Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker or provided in the appraisal. Also, it could be calculated as Total Area (SF) for Residential Unit for Sale Type by Setup [i] divided by Number of Units for Residential Unit for Sale Type by Setup [i]. If this specific Residential Unit for Sale Type by Setup is identified as N/A, state 0.\n\n== # of Units ==\n145. Number of Units for Residential Unit for Sale Type by Setup [i]\n145.1. array of numbers\n145.3. Enter number of units associated with Residential Unit for Sale Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker or provided in the appraisal. If this specific Residential Unit for Sale Type by Setup is identified as N/A, state 0.\n\n== Total Unit SF ==\n146. Total Area (SF) for Residential Unit for Sale Type by Setup [i]\n146.1. array of numbers\n146.3. Enter total area expressed in SF for units associated with Residential Unit for Sale Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker or provided in the appraisal. Also, it could be calculated as Average Unit Area (SF) for Residential Unit for Sale Type by Setup [i] multiplied by Number of Units for Residential Unit for Sale Type by Setup [i]. If this specific Residential Unit for Sale Type by Setup is identified as N/A, state 0.\n\n== Borrower ==\n== Total Units Price ==\n147. Total Units Price for Unit for Sale Type by Setup [i] (Borrower)\n147.1. array of numbers-$\n147.3. Enter total price for units associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the borrower or broker. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n== Appraisal ==\n== Total Units Price ==\n148. Total Units Price for Unit for Sale Type by Setup [i] (Appraisal)\n148.1. array of numbers-$\n148.3. Enter total price for units associated with Residential Unit Type by Setup [i] which could be either provided in the budget , proforma, or unit mix schedule provided by the appraisal. If this specific Residential Unit Type by Setup is identified as N/A, state 0.\n\n=== COMMERCIAL FOR RENT ===\n== UNIT MIX ==\n== Commercial Unit Mix ==\n== Commercial Unit # ==\n149. Unit # for Commercial Unit [i]\n149.1. array of text\n149.3. Describe commercial unit number for Commercial Unit [i]. It could be sequential number, numbers and letters, or names. Refer to value examples. If all available commercial units have been described, state N/A.\n\n== Commercial Unit Type ==\n150. Commercial Unit [i] Type\n150.1. array of list\n150.2. Industrial/Retail/Office/N-A\n150.3. Select relevant Type for Commercial Unit [i]. Refer to the list of values for available types. If Unit # for Commercial Unit [i] was described as N/A, state N/A.\n\n== Commercial Unit Status ==\n151. Commercial Unit [i] Status\n151.1. array of list\n151.2. Leased/Vacant/N-A\n151.3. Select relevant Status (Leased or Vacant) for Commercial Unit [i]. Refer to the list of values for available statuses. If Unit # for Commercial Unit [i] was described as N/A, state N/A.\n\n== Commercial Unit SF ==\n152. Commercial Unit [i] Area (SF)\n152.1. array of numbers\n152.3. Enter square footage for Commercial Unit [i]. If Unit # for Commercial Unit 1 was described as N/A, state N/A.\n\n== Borrower ==\n== Unit Rent per SF per year ==\n153. Commercial Unit [i] Rent per SF per year (Borrower)\n153.1. array of numbers-$\n153.3. Enter Base Rent per SF per year for Commercial Unit [i] provided by the Borrower or broker. If Unit # for Commercial Unit [i] was described as N/A, state N/A. Base Rent is the fixed minimum rent a tenant pays under a lease agreement, excluding additional charges such as operating costs, taxes, or percentage rent.\n\n== Appraisal ==\n== Unit Rent per SF per year ==\n154. Commercial Unit [i] Rent per SF per year (Appraisal)\n154.1. array of numbers-$\n154.3. Enter Base Rent per SF per year for Commercial Unit [i] provided by the Appraisal. If Unit # for Commercial Unit [i] was described as N/A, state N/A. Base Rent is the fixed minimum rent a tenant pays under a lease agreement, excluding additional charges such as operating costs, taxes, or percentage rent.\n\n=== COMMERCIAL FOR SALE ===\n== UNIT MIX ==\n== Commercial Unit Mix ==\n== Commercial Unit # ==\n155. Unit # for Commercial Unit for Sale [i] for Sale\n155.1. array of text\n155.3. Describe commercial unit number for Commercial Unit for Sale [i]. It could be sequential number, numbers and letters, or names. Refer to value examples. If all available commercial units have been described, state N/A.\n\n== Unit Type ==\n156. Commercial Unit for Sale [i] Type\n156.1. array of list\n156.2. Sold/Available/N-A\n156.3. Select relevant Type for Commercial Unit for Sale [i]. Refer to the list of values for available types. If Unit # for Commercial Unit for Sale [i] was described as N/A, state N/A.\n\n== Unit Status ==\n157. Commercial Unit for Sale [i] Status\n157.1. array of list\n157.3. Select relevant Status (Sold or Available) for Commercial Unit for Sale [i]. Refer to the list of values for available statuses. If Unit # for Commercial Unit for Sale [i] was described as N/A, state N/A.\n\n== Unit SF ==\n158. Commercial Unit for Sale [i] Area (SF)\n158.1. array of numbers\n158.3. Enter square footage for Commercial Unit for Sale [i]. If Unit # for Commercial Unit for Sale [i] was described as N/A, state N/A.\n\n== Borrower ==\n== Unit Price ==\n159. Commercial Unit for Sale [i] Price (Borrower)\n159.1. array of numbers-$\n159.3. Enter unit price expressed as dollar amount for Commercial Unit for Sale [i] provided by the Borrower or broker. If Unit # for Commercial Unit for Sale [i] was described as N/A, state N/A.\n\n== Appraisal ==\n== Unit Price ==\n160. Commercial Unit for Sale [i] Price (Appraisal)\n160.1. array of numbers-$\n160.3. Enter unit price expressed as dollar amount for Commercial Unit for Sale [i] provided by the Appraisal. If Unit # for Commercial Unit for Sale [i] was described as N/A, state N/A.\n\n---\n\nDocument(s) chunk text: \n{{ $json.chunkContent}}",
-        "hasOutputParser": true,
-        "batching": {
-          "batchSize": 1,
-          "delayBetweenBatches": 3000
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.7,
-      "position": [
-        5168,
-        4736
-      ],
-      "id": "dd3f5c02-72b1-4d78-82d9-818d34cce5b6",
-      "name": "Create final summary9",
-      "retryOnFail": true,
-      "maxTries": 2,
-      "waitBetweenTries": 2000,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n  \"1\": \"\",\n  \"2\": \"\",\n  \"3\": \"\",\n  \"4\": \"\",\n  \"5\": \"\",\n  \"6\": \"\",\n  \"7\": \"\",\n  \"8\": \"\",\n  \"9\": \"\",\n  \"10\": \"\",\n  \"11\": \"\",\n  \"12\": \"\",\n  \"13\": \"\",\n  \"14\": \"\",\n  \"15\": \"\",\n  \"16\": \"\",\n  \"17\": \"\",\n  \"18\": \"\",\n  \"19\": \"\",\n  \"20\": 0,\n  \"21\": \"\",\n  \"22\": \"\",\n  \"23\": \"\",\n  \"24\": \"\",\n  \"25\": \"\",\n  \"26\": \"\",\n  \"27\": 0,\n  \"28\": 0,\n  \"29\": \"\",\n  \"30\": \"\",\n  \"31\": \"\",\n  \"32\": \"\",\n  \"33\": \"\",\n  \"34\": \"\",\n  \"35\": \"\",\n  \"36\": \"\",\n  \"37\": \"\",\n  \"38\": \"\",\n  \"39\": \"\",\n  \"40\": \"\",\n  \"41\": \"\",\n  \"42\": \"\",\n  \"43\": \"\",\n  \"44\": \"\",\n  \"45\": \"\",\n  \"46\": \"\",\n  \"47\": \"\",\n  \"48\": \"\",\n  \"49\": \"\",\n  \"50\": \"\",\n  \"51\": \"\",\n  \"52\": \"\",\n  \"53\": \"\",\n  \"54\": \"\",\n  \"55\": \"\",\n  \"56\": \"\",\n  \"57\": \"\",\n  \"58\": \"\",\n  \"59\": 0,\n  \"60\": \"\",\n  \"61\": 0,\n  \"62\": 0,\n  \"63\": 0,\n  \"64\": 0,\n  \"65\": 0,\n  \"66\": 0,\n  \"67\": 0,\n  \"68\": 0,\n  \"69\": 0,\n  \"70\": 0,\n  \"71\": 0,\n  \"72\": \"\",\n  \"73\": \"\",\n  \"74\": \"\",\n  \"75\": \"\",\n  \"76\": \"\",\n  \"77\": \"\",\n  \"78\": \"\",\n  \"79\": \"\",\n  \"80\": \"\",\n  \"81\": \"\",\n  \"82\": \"\",\n  \"83\": \"\",\n  \"84\": \"\",\n  \"85\": \"\",\n  \"86\": \"\",\n  \"87\": \"\",\n  \"88\": \"\",\n  \"89\": \"\",\n  \"90\": \"\",\n  \"91\": \"\",\n  \"92\": \"\",\n  \"93\": \"\",\n  \"94\": \"\",\n  \"95\": \"\",\n  \"96\": \"\",\n  \"97\": \"\",\n  \"98\": \"\",\n  \"99\": \"\",\n  \"100\": \"\",\n  \"101\": \"\",\n  \"102\": \"\",\n  \"103\": \"\",\n  \"104\": \"\",\n  \"105\": \"\",\n  \"106\": \"\",\n  \"107\": \"\",\n  \"108\": \"\",\n  \"109\": \"\",\n  \"110\": \"\",\n  \"111\": \"\",\n  \"112\": \"\",\n  \"113\": \"\",\n  \"114\": \"\",\n  \"115\": \"\",\n  \"116\": \"\",\n  \"117\": \"\",\n  \"118\": \"\",\n  \"119\": \"\",\n  \"120\": \"\",\n  \"121\": \"\",\n  \"122\": \"\",\n  \"123\": \"\",\n  \"124\": [],\n  \"125\": [],\n  \"126\": [],\n  \"127\": [],\n  \"128\": [],\n  \"129\": [],\n  \"130\": [],\n  \"131\": [],\n  \"132\": [],\n  \"133\": 0,\n  \"134\": 0,\n  \"135\": \"\",\n  \"136\": \"\",\n  \"137\": 0,\n  \"138\": \"\",\n  \"139\": \"\",\n  \"140\": \"\",\n  \"141\": \"\",\n  \"142\": [],\n  \"143\": [],\n  \"144\": [],\n  \"145\": [],\n  \"146\": [],\n  \"147\": [],\n  \"148\": [],\n  \"149\": [],\n  \"150\": [],\n  \"151\": [],\n  \"152\": [],\n  \"153\": [],\n  \"154\": [],\n  \"155\": [],\n  \"156\": [],\n  \"157\": [],\n  \"158\": [],\n  \"159\": [],\n  \"160\": []\n}\n",
-        "autoFix": true
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        5296,
-        4960
-      ],
-      "id": "080495c3-d3a4-49ab-bed1-059c9fd14072",
-      "name": "Structured Output Parser1"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1",
-          "mode": "list",
-          "cachedResultName": "gpt-4.1"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        5168,
-        4944
-      ],
-      "id": "54692e06-7bed-4e88-8a37-85b50b59f84a",
-      "name": "OpenAI Chat Model7",
       "credentials": {
         "openAiApi": {
           "id": "6WxABrGkJMVqyaUq",
@@ -1132,7 +986,7 @@
             {
               "id": "f5789f00-38bc-49ff-83eb-49bd39a1ee97",
               "name": "MAX_CHUNK_SIZE",
-              "value": 900000,
+              "value": 250000,
               "type": "number"
             }
           ]
@@ -1268,7 +1122,8 @@
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        []
       ]
     },
     "Download file1": {
@@ -1391,29 +1246,11 @@
         ]
       ]
     },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Prepare Chunk for Processing5",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Prepare Chunk for Processing6",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Split Data into Chunks2": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "Prepare Chunk for Processing5",
             "type": "main",
             "index": 0
           }
@@ -1431,33 +1268,11 @@
         ]
       ]
     },
-    "Prepare Chunk for Processing6": {
-      "main": [
-        [
-          {
-            "node": "Create final summary9",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Merge12": {
       "main": [
         [
           {
             "node": "total",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript10": {
-      "main": [
-        [
-          {
-            "node": "Code2",
             "type": "main",
             "index": 0
           }
@@ -1568,50 +1383,6 @@
           {
             "node": "Create final summary8",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model6": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Structured Output Parser1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Structured Output Parser1": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "Create final summary9",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model7": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Create final summary9",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create final summary9": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript10",
-            "type": "main",
             "index": 0
           }
         ]
@@ -1770,9 +1541,9 @@
       "main": [
         [
           {
-            "node": "Split Data into Chunks2",
+            "node": "Merge3",
             "type": "main",
-            "index": 0
+            "index": 4
           }
         ]
       ]
@@ -1787,8 +1558,180 @@
   },
   "staticData": null,
   "meta": null,
-  "pinData": {},
-  "versionId": "fa975407-6d44-4829-8dd7-2e77d2378618",
+  "pinData": {
+    "Create final summary8": [
+      {
+        "json": {
+          "output": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+            "10": "",
+            "11": "",
+            "12": "568 Starling Lane",
+            "13": "Victoria, BC",
+            "14": "",
+            "15": "BC",
+            "16": "",
+            "17": "",
+            "18": "",
+            "19": "",
+            "20": 0,
+            "21": "",
+            "22": "",
+            "23": "",
+            "24": "",
+            "25": "",
+            "26": "",
+            "27": 0,
+            "28": 0,
+            "29": "",
+            "30": "",
+            "31": "",
+            "32": "Kevin Zhong Lin",
+            "33": "",
+            "34": "",
+            "35": "",
+            "36": "",
+            "37": "",
+            "38": "",
+            "39": "",
+            "40": "",
+            "41": "",
+            "42": "",
+            "43": "",
+            "44": "",
+            "45": "",
+            "46": "",
+            "47": "",
+            "48": "",
+            "49": "",
+            "50": "",
+            "51": "",
+            "52": "",
+            "53": "",
+            "54": "",
+            "55": "",
+            "56": "",
+            "57": "",
+            "58": "",
+            "59": 0,
+            "60": "",
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": "",
+            "73": "",
+            "74": "",
+            "75": "",
+            "76": "",
+            "77": "",
+            "78": "",
+            "79": "",
+            "80": "",
+            "81": "",
+            "82": "",
+            "83": "",
+            "84": "",
+            "85": "",
+            "86": "",
+            "87": "",
+            "88": "",
+            "89": "",
+            "90": "",
+            "91": "",
+            "92": "",
+            "93": "",
+            "94": "",
+            "95": "",
+            "96": "",
+            "97": "",
+            "98": "",
+            "99": "",
+            "100": "",
+            "101": "",
+            "102": "",
+            "103": "",
+            "104": "",
+            "105": "",
+            "106": "",
+            "107": "",
+            "108": "",
+            "109": "",
+            "110": "",
+            "111": "",
+            "112": "",
+            "113": "",
+            "114": "",
+            "115": "",
+            "116": "",
+            "117": "",
+            "118": "",
+            "119": "",
+            "120": "",
+            "121": "",
+            "122": "",
+            "123": "",
+            "124": [],
+            "125": [],
+            "126": [],
+            "127": [],
+            "128": [],
+            "129": [],
+            "130": [],
+            "131": [],
+            "132": [],
+            "133": 0,
+            "134": 0,
+            "135": "",
+            "136": "",
+            "137": 0,
+            "138": "",
+            "139": "",
+            "140": "",
+            "141": "",
+            "142": [],
+            "143": [],
+            "144": [],
+            "145": [],
+            "146": [],
+            "147": [],
+            "148": [],
+            "149": [],
+            "150": [],
+            "151": [],
+            "152": [],
+            "153": [],
+            "154": [],
+            "155": [],
+            "156": [],
+            "157": [],
+            "158": [],
+            "159": [],
+            "160": []
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "22f00eff-c349-4f3c-91a5-f239f3e3e484",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
