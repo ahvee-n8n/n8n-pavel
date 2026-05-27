@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-27T16:38:31.704Z",
+  "updatedAt": "2026-05-27T16:51:17.913Z",
   "createdAt": "2026-05-25T05:22:33.044Z",
   "id": "1tp5ERA85rjAAQ18",
   "name": "Gmail files with AI to excel ocr 3",
@@ -1659,19 +1659,24 @@
     "binaryMode": "separate",
     "availableInMCP": false,
     "timeSavedMode": "fixed",
-    "callerPolicy": "workflowsFromSameOwner"
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataSuccessExecution": "none"
   },
   "staticData": {
     "node:Gmail Trigger": {
       "Gmail Trigger": {
-        "lastTimeChecked": 1779898337
+        "lastTimeChecked": 1779901085,
+        "possibleDuplicates": [
+          "19e6a5f2e5ff0f24",
+          "19e6a5e599e0ad9b"
+        ]
       }
     }
   },
   "meta": null,
   "pinData": {},
-  "versionId": "42535a4e-c942-43ef-bb78-cd0ba9212f7d",
-  "activeVersionId": "42535a4e-c942-43ef-bb78-cd0ba9212f7d",
+  "versionId": "35ce1137-dd54-448d-a36e-a7e884dab924",
+  "activeVersionId": "35ce1137-dd54-448d-a36e-a7e884dab924",
   "triggerCount": 1,
   "shared": [
     {
@@ -1683,9 +1688,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-05-27T16:12:17.000Z",
-    "createdAt": "2026-05-27T14:44:26.551Z",
-    "versionId": "42535a4e-c942-43ef-bb78-cd0ba9212f7d",
+    "updatedAt": "2026-05-27T16:51:24.000Z",
+    "createdAt": "2026-05-27T16:51:17.923Z",
+    "versionId": "35ce1137-dd54-448d-a36e-a7e884dab924",
     "workflowId": "1tp5ERA85rjAAQ18",
     "nodes": [
       {
@@ -3337,7 +3342,7 @@
       }
     },
     "authors": "oleksandr danyliuk",
-    "name": "Version 42535a4e",
+    "name": "Version 35ce1137",
     "description": "",
     "autosaved": true
   },
