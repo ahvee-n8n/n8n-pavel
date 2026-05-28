@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-27T16:51:17.913Z",
+  "updatedAt": "2026-05-28T03:47:41.346Z",
   "createdAt": "2026-05-25T05:22:33.044Z",
   "id": "1tp5ERA85rjAAQ18",
   "name": "Gmail files with AI to excel ocr 3",
@@ -888,7 +888,7 @@
     },
     {
       "parameters": {
-        "url": "=http://172.17.0.1:5000/{{ $('OCRmyPDF PUT').item.json.task_id }}",
+        "url": "=http://172.17.0.1:5000/{{ $('OCRmyPDF PUT').first().json.task_id }}",
         "options": {
           "timeout": 60000
         }
@@ -1665,18 +1665,17 @@
   "staticData": {
     "node:Gmail Trigger": {
       "Gmail Trigger": {
-        "lastTimeChecked": 1779917055,
+        "lastTimeChecked": 1779940230,
         "possibleDuplicates": [
-          "19e6b52e78a988cf",
-          "19e6a698a345a183"
+          "19e6cb487047e38d"
         ]
       }
     }
   },
   "meta": null,
   "pinData": {},
-  "versionId": "35ce1137-dd54-448d-a36e-a7e884dab924",
-  "activeVersionId": "35ce1137-dd54-448d-a36e-a7e884dab924",
+  "versionId": "eef9d339-727d-45a3-81e8-749674ec6656",
+  "activeVersionId": "eef9d339-727d-45a3-81e8-749674ec6656",
   "triggerCount": 1,
   "shared": [
     {
@@ -1688,9 +1687,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-05-27T16:51:24.000Z",
-    "createdAt": "2026-05-27T16:51:17.923Z",
-    "versionId": "35ce1137-dd54-448d-a36e-a7e884dab924",
+    "updatedAt": "2026-05-28T03:47:49.000Z",
+    "createdAt": "2026-05-28T03:47:41.354Z",
+    "versionId": "eef9d339-727d-45a3-81e8-749674ec6656",
     "workflowId": "1tp5ERA85rjAAQ18",
     "nodes": [
       {
@@ -2575,7 +2574,7 @@
       },
       {
         "parameters": {
-          "url": "=http://172.17.0.1:5000/{{ $('OCRmyPDF PUT').item.json.task_id }}",
+          "url": "=http://172.17.0.1:5000/{{ $('OCRmyPDF PUT').first().json.task_id }}",
           "options": {
             "timeout": 60000
           }
@@ -3342,7 +3341,7 @@
       }
     },
     "authors": "oleksandr danyliuk",
-    "name": "Version 35ce1137",
+    "name": "Version eef9d339",
     "description": "",
     "autosaved": true
   },
