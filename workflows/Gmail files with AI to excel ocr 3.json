@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-28T03:47:41.346Z",
+  "updatedAt": "2026-05-28T06:58:45.631Z",
   "createdAt": "2026-05-25T05:22:33.044Z",
   "id": "1tp5ERA85rjAAQ18",
   "name": "Gmail files with AI to excel ocr 3",
@@ -461,9 +461,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5.4-nano",
+          "value": "gpt-5.4",
           "mode": "list",
-          "cachedResultName": "gpt-5.4-nano"
+          "cachedResultName": "gpt-5.4"
         },
         "options": {}
       },
@@ -805,9 +805,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5.4-nano",
+          "value": "gpt-5.4",
           "mode": "list",
-          "cachedResultName": "gpt-5.4-nano"
+          "cachedResultName": "gpt-5.4"
         },
         "options": {}
       },
@@ -1665,8 +1665,9 @@
   "staticData": {
     "node:Gmail Trigger": {
       "Gmail Trigger": {
-        "lastTimeChecked": 1779940230,
+        "lastTimeChecked": 1779950165,
         "possibleDuplicates": [
+          "19e6d4c1e712a8ec",
           "19e6cb487047e38d"
         ]
       }
@@ -1674,7 +1675,7 @@
   },
   "meta": null,
   "pinData": {},
-  "versionId": "eef9d339-727d-45a3-81e8-749674ec6656",
+  "versionId": "d79381fe-7274-446c-8eb4-cc501a252042",
   "activeVersionId": "eef9d339-727d-45a3-81e8-749674ec6656",
   "triggerCount": 1,
   "shared": [
