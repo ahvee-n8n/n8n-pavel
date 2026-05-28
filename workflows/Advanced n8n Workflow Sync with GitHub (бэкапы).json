@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-27T17:55:01.244Z",
+  "updatedAt": "2026-05-28T04:36:20.263Z",
   "createdAt": "2026-05-14T21:13:55.477Z",
   "id": "yRcxskGZLhzAF2XU",
   "name": "Advanced n8n Workflow Sync with GitHub (бэкапы)",
@@ -50,7 +50,7 @@
       "credentials": {
         "githubApi": {
           "id": "CXYqNJWGr9M0xU2Z",
-          "name": "GitHub account"
+          "name": "GitHub account (бэкапы)"
         }
       }
     },
@@ -89,7 +89,7 @@
       "credentials": {
         "n8nApi": {
           "id": "A3iMtodAy2uGpZkJ",
-          "name": "n8n account"
+          "name": "n8n account (бэкапы)"
         }
       }
     },
@@ -148,7 +148,7 @@
       "credentials": {
         "githubApi": {
           "id": "CXYqNJWGr9M0xU2Z",
-          "name": "GitHub account"
+          "name": "GitHub account (бэкапы)"
         }
       }
     },
@@ -181,7 +181,7 @@
       "credentials": {
         "githubApi": {
           "id": "CXYqNJWGr9M0xU2Z",
-          "name": "GitHub account"
+          "name": "GitHub account (бэкапы)"
         }
       }
     },
@@ -259,7 +259,7 @@
       "credentials": {
         "githubApi": {
           "id": "CXYqNJWGr9M0xU2Z",
-          "name": "GitHub account"
+          "name": "GitHub account (бэкапы)"
         }
       },
       "onError": "continueErrorOutput",
@@ -485,7 +485,7 @@
       "credentials": {
         "githubApi": {
           "id": "CXYqNJWGr9M0xU2Z",
-          "name": "GitHub account"
+          "name": "GitHub account (бэкапы)"
         }
       },
       "onError": "continueErrorOutput",
@@ -555,40 +555,7 @@
       "credentials": {
         "telegramApi": {
           "id": "hMvNEkGUG4nxQ9AV",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "file",
-        "owner": {
-          "__rl": true,
-          "mode": "",
-          "value": "={{ $(\"Configuration\").item.json.repo.owner }}"
-        },
-        "repository": {
-          "__rl": true,
-          "mode": "",
-          "value": "={{ $(\"Configuration\").item.json.repo.name }}"
-        },
-        "filePath": "={{ $json.context.newFile.path }}",
-        "fileContent": "={{ JSON.stringify($json.n8nWorkflowData.base64Decode().parseJson(), null, 2) }}",
-        "commitMessage": "=create: {{ $json.context.newFile.name }}"
-      },
-      "id": "1e415d15-1543-40b5-91ba-5f787d737d78",
-      "name": "Create new file",
-      "type": "n8n-nodes-base.github",
-      "position": [
-        1120,
-        2416
-      ],
-      "webhookId": "66429ae4-4b7d-4fb5-8438-26cdf6c4faa8",
-      "typeVersion": 1,
-      "credentials": {
-        "githubApi": {
-          "id": "CXYqNJWGr9M0xU2Z",
-          "name": "GitHub account"
+          "name": "Telegram account (бэкапы)"
         }
       }
     },
@@ -609,8 +576,8 @@
       "name": "Merge after create",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1408,
-        2400
+        1712,
+        2384
       ],
       "typeVersion": 3.2,
       "notes": "Keeps the original context intact across the GitHub step. Prevents losing flags and fields."
@@ -896,8 +863,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3200,
-        1072
+        -2912,
+        1088
       ],
       "typeVersion": 1
     },
@@ -968,6 +935,39 @@
       ],
       "typeVersion": 2.2,
       "notes": "Pre-provisioning safe fuse"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "mode": "",
+          "value": "={{ $(\"Configuration\").item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "",
+          "value": "={{ $(\"Configuration\").item.json.repo.name }}"
+        },
+        "filePath": "={{ $json.context.newFile.path }}",
+        "fileContent": "={{ JSON.stringify($json.n8nWorkflowData.base64Decode().parseJson(), null, 2) }}",
+        "commitMessage": "=create: {{ $json.context.newFile.name }}"
+      },
+      "id": "1e415d15-1543-40b5-91ba-5f787d737d78",
+      "name": "Create new file",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        1408,
+        2400
+      ],
+      "webhookId": "66429ae4-4b7d-4fb5-8438-26cdf6c4faa8",
+      "typeVersion": 1,
+      "credentials": {
+        "githubApi": {
+          "id": "CXYqNJWGr9M0xU2Z",
+          "name": "GitHub account (бэкапы)"
+        }
+      }
     }
   ],
   "connections": {
@@ -1010,12 +1010,12 @@
         ],
         [
           {
-            "node": "Create new file",
+            "node": "Merge after create",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Merge after create",
+            "node": "Create new file",
             "type": "main",
             "index": 0
           }
@@ -1087,17 +1087,6 @@
             "node": "Send a message",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Create new file": {
-      "main": [
-        [
-          {
-            "node": "Merge after create",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
@@ -1312,6 +1301,17 @@
           }
         ]
       ]
+    },
+    "Create new file": {
+      "main": [
+        [
+          {
+            "node": "Merge after create",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -1331,8 +1331,8 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "b7fb8347-69f1-444d-b84e-e03d7adbad7b",
-  "activeVersionId": "b7fb8347-69f1-444d-b84e-e03d7adbad7b",
+  "versionId": "a440f6d3-9856-4820-81f0-3aa482c88271",
+  "activeVersionId": "8f309736-54b9-4bd3-ab39-925d637147e3",
   "triggerCount": 1,
   "shared": [
     {
@@ -1344,9 +1344,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2026-05-14T21:17:47.000Z",
-    "createdAt": "2026-05-14T21:17:32.457Z",
-    "versionId": "b7fb8347-69f1-444d-b84e-e03d7adbad7b",
+    "updatedAt": "2026-05-28T04:32:01.000Z",
+    "createdAt": "2026-05-28T04:31:30.769Z",
+    "versionId": "8f309736-54b9-4bd3-ab39-925d637147e3",
     "workflowId": "yRcxskGZLhzAF2XU",
     "nodes": [
       {
@@ -1393,7 +1393,7 @@
         "credentials": {
           "githubApi": {
             "id": "CXYqNJWGr9M0xU2Z",
-            "name": "GitHub account"
+            "name": "GitHub account (бэкапы)"
           }
         }
       },
@@ -1432,7 +1432,7 @@
         "credentials": {
           "n8nApi": {
             "id": "A3iMtodAy2uGpZkJ",
-            "name": "n8n account"
+            "name": "n8n account (бэкапы)"
           }
         }
       },
@@ -1491,7 +1491,7 @@
         "credentials": {
           "githubApi": {
             "id": "CXYqNJWGr9M0xU2Z",
-            "name": "GitHub account"
+            "name": "GitHub account (бэкапы)"
           }
         }
       },
@@ -1524,7 +1524,7 @@
         "credentials": {
           "githubApi": {
             "id": "CXYqNJWGr9M0xU2Z",
-            "name": "GitHub account"
+            "name": "GitHub account (бэкапы)"
           }
         }
       },
@@ -1602,7 +1602,7 @@
         "credentials": {
           "githubApi": {
             "id": "CXYqNJWGr9M0xU2Z",
-            "name": "GitHub account"
+            "name": "GitHub account (бэкапы)"
           }
         },
         "onError": "continueErrorOutput",
@@ -1828,7 +1828,7 @@
         "credentials": {
           "githubApi": {
             "id": "CXYqNJWGr9M0xU2Z",
-            "name": "GitHub account"
+            "name": "GitHub account (бэкапы)"
           }
         },
         "onError": "continueErrorOutput",
@@ -1898,40 +1898,7 @@
         "credentials": {
           "telegramApi": {
             "id": "hMvNEkGUG4nxQ9AV",
-            "name": "Telegram account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "resource": "file",
-          "owner": {
-            "__rl": true,
-            "mode": "",
-            "value": "={{ $(\"Configuration\").item.json.repo.owner }}"
-          },
-          "repository": {
-            "__rl": true,
-            "mode": "",
-            "value": "={{ $(\"Configuration\").item.json.repo.name }}"
-          },
-          "filePath": "={{ $json.context.newFile.path }}",
-          "fileContent": "={{ JSON.stringify($json.n8nWorkflowData.base64Decode().parseJson(), null, 2) }}",
-          "commitMessage": "=create: {{ $json.context.newFile.name }}"
-        },
-        "id": "1e415d15-1543-40b5-91ba-5f787d737d78",
-        "name": "Create new file",
-        "type": "n8n-nodes-base.github",
-        "position": [
-          1120,
-          2416
-        ],
-        "webhookId": "66429ae4-4b7d-4fb5-8438-26cdf6c4faa8",
-        "typeVersion": 1,
-        "credentials": {
-          "githubApi": {
-            "id": "CXYqNJWGr9M0xU2Z",
-            "name": "GitHub account"
+            "name": "Telegram account (бэкапы)"
           }
         }
       },
@@ -1952,8 +1919,8 @@
         "name": "Merge after create",
         "type": "n8n-nodes-base.merge",
         "position": [
-          1408,
-          2400
+          1712,
+          2384
         ],
         "typeVersion": 3.2,
         "notes": "Keeps the original context intact across the GitHub step. Prevents losing flags and fields."
@@ -2239,8 +2206,8 @@
         "name": "Sticky Note10",
         "type": "n8n-nodes-base.stickyNote",
         "position": [
-          -3200,
-          1072
+          -2912,
+          1088
         ],
         "typeVersion": 1
       },
@@ -2311,6 +2278,39 @@
         ],
         "typeVersion": 2.2,
         "notes": "Pre-provisioning safe fuse"
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "owner": {
+            "__rl": true,
+            "mode": "",
+            "value": "={{ $(\"Configuration\").item.json.repo.owner }}"
+          },
+          "repository": {
+            "__rl": true,
+            "mode": "",
+            "value": "={{ $(\"Configuration\").item.json.repo.name }}"
+          },
+          "filePath": "={{ $json.context.newFile.path }}",
+          "fileContent": "={{ JSON.stringify($json.n8nWorkflowData.base64Decode().parseJson(), null, 2) }}",
+          "commitMessage": "=create: {{ $json.context.newFile.name }}"
+        },
+        "id": "1e415d15-1543-40b5-91ba-5f787d737d78",
+        "name": "Create new file",
+        "type": "n8n-nodes-base.github",
+        "position": [
+          1408,
+          2400
+        ],
+        "webhookId": "66429ae4-4b7d-4fb5-8438-26cdf6c4faa8",
+        "typeVersion": 1,
+        "credentials": {
+          "githubApi": {
+            "id": "CXYqNJWGr9M0xU2Z",
+            "name": "GitHub account (бэкапы)"
+          }
+        }
       }
     ],
     "connections": {
@@ -2353,12 +2353,12 @@
           ],
           [
             {
-              "node": "Create new file",
+              "node": "Merge after create",
               "type": "main",
               "index": 0
             },
             {
-              "node": "Merge after create",
+              "node": "Create new file",
               "type": "main",
               "index": 0
             }
@@ -2430,17 +2430,6 @@
               "node": "Send a message",
               "type": "main",
               "index": 0
-            }
-          ]
-        ]
-      },
-      "Create new file": {
-        "main": [
-          [
-            {
-              "node": "Merge after create",
-              "type": "main",
-              "index": 1
             }
           ]
         ]
@@ -2655,10 +2644,21 @@
             }
           ]
         ]
+      },
+      "Create new file": {
+        "main": [
+          [
+            {
+              "node": "Merge after create",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
       }
     },
     "authors": "oleksandr danyliuk",
-    "name": "Version b7fb8347",
+    "name": "Version 8f309736",
     "description": "",
     "autosaved": true
   },
