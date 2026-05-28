@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-05-27T16:37:41.446Z",
+  "updatedAt": "2026-05-28T04:38:59.000Z",
   "createdAt": "2026-05-14T21:07:33.378Z",
   "id": "lFzbfi7e9lAmkXIm",
   "name": "Gmail files with AI to excel ocr",
   "active": false,
-  "isArchived": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -3738,7 +3738,7 @@
       }
     ]
   },
-  "versionId": "a523437e-768d-4688-9a74-81b09a3065df",
+  "versionId": "8c45b99c-6f75-4b2d-8972-de6845186db2",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
